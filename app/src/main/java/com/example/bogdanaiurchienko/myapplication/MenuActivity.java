@@ -18,6 +18,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
+import com.example.bogdanaiurchienko.myapplication.model.ServerConnection;
+
+import java.net.MalformedURLException;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +57,8 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+
+
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
@@ -77,7 +82,6 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -88,6 +92,8 @@ public class MenuActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -97,6 +103,7 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            ServerConnection con = (ServerConnection) new ServerConnection().execute();
 
         } else if (id == R.id.nav_slideshow) {
 
