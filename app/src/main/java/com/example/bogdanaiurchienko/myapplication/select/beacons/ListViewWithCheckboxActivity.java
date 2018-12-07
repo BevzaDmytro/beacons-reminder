@@ -16,6 +16,7 @@ import android.widget.ListView;
 
 import com.example.bogdanaiurchienko.myapplication.R;
 import com.example.bogdanaiurchienko.myapplication.model.Beacon;
+import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 public class ListViewWithCheckboxActivity extends AppCompatActivity {
 
     int noteId;
-    DataBaseEmulator db = DataBaseEmulator.getInstance();
+    DataBaseConnector db = DataBaseEmulator.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

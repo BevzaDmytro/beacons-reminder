@@ -1,9 +1,13 @@
 package com.example.bogdanaiurchienko.myapplication;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,20 +16,25 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
+import com.example.bogdanaiurchienko.myapplication.model.Note;
+
+import java.util.ArrayList;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    final DataBaseEmulator db = DataBaseEmulator.getInstance();
+    final DataBaseConnector db = DataBaseEmulator.getInstance();
     ListView notesView;
     NoteItemAdapter noteItemAdapter;
     int lastNote;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,7 @@ public class MenuActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                lastNote = 0;
                 Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
                 showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", db.getNewNoteId());
                 startActivity(showNoteDetail);
@@ -79,34 +89,27 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        return super.onOptionsItemSelected(item);
-//    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.add_note) {
+            lastNote = 0;
+            Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
+            showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", db.getNewNoteId());
+            startActivity(showNoteDetail);
+        } else if (id == R.id.all_beacons) {
+            Intent showAllBeacons = new Intent(getApplicationContext(), AllBeaconsActivity.class);
+            startActivity(showAllBeacons);
+        } else if (id == R.id.settings) {
 
-        } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.help) {
 
-        } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.feedback) {
 
         }
 
@@ -114,7 +117,6 @@ public class MenuActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 
     @Override
     protected void onRestart() {
@@ -128,5 +130,50 @@ public class MenuActivity extends AppCompatActivity
                 notesView.smoothScrollToPosition(lastNote+1);
             }
         });
+    }
+
+    class NoteItemAdapter extends BaseAdapter {
+
+        private LayoutInflater layoutInflater;
+        private ArrayList<Note> notes;
+        private int size;
+
+        NoteItemAdapter(Context context, ArrayList<Note> notes) {
+            this.size = notes.size();
+            this.layoutInflater = (LayoutInflater) context.getSystemService(LAYOUT_INFLATER_SERVICE);
+            this.notes = notes;
+        }
+
+        @Override
+        public int getCount() {
+            return notes.size();
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return notes.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return notes.get(i).getId();
+        }
+
+        @SuppressLint({"ViewHolder", "InflateParams"})
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            Note note = notes.get(size - 1 - i);
+            view = layoutInflater.inflate(R.layout.note_item_layout, null);
+            view.setBackgroundColor(Color.parseColor(note.getColor()));
+
+            TextView noteName = view.findViewById(R.id.noteName);
+            TextView noteText = view.findViewById(R.id.noteText);
+            TextView noteBeacons = view.findViewById(R.id.noteBeacons);
+
+            noteName.setText(note.getName());
+            noteText.setText(note.getText());
+            noteBeacons.setText(note.getBeaconsNames());
+            return view;
+        }
     }
 }

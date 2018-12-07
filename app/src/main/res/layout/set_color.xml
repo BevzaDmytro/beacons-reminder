@@ -5,7 +5,6 @@
     android:layout_height="wrap_content">
 
 
-
     <RadioGroup
         android:id="@+id/colorRadioGroup"
         android:layout_width="match_parent"
@@ -13,6 +12,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:fadingEdge="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -22,56 +22,64 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fcc875"
-            android:text="@string/color_1" />
+            android:text="@string/color_1"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#baa896"
-            android:text="@string/color_2" />
+            android:text="@string/color_2"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e6ccb5"
-            android:text="@string/color_3" />
+            android:text="@string/color_3"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#e38b75"
-            android:text="@string/color_4" />
+            android:text="@string/color_4"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#eae2d6"
-            android:text="@string/color_5" />
+            android:text="@string/color_5"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#d5c3aa"
-            android:text="@string/color_6" />
+            android:text="@string/color_6"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#ebb582"
-            android:text="@string/color_7" />
+            android:text="@string/color_7"
+            android:textSize="@dimen/color_name_text_size" />
 
         <RadioButton
             android:id="@+id/color8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#d6c6b9"
-            android:text="@string/color_8" />
+            android:text="@string/color_8"
+            android:textSize="@dimen/color_name_text_size" />
 
 
     </RadioGroup>

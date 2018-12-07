@@ -3,27 +3,26 @@ package com.example.bogdanaiurchienko.myapplication;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
+import android.view.Window;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 import com.example.bogdanaiurchienko.myapplication.select.beacons.ListViewWithCheckboxActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Objects;
 
 public class NoteDetailsActivity extends AppCompatActivity {
 
-    DataBaseEmulator db = DataBaseEmulator.getInstance();
+    DataBaseConnector db = DataBaseEmulator.getInstance();
     int noteId;
     Note note;
     View root;
@@ -86,7 +85,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
 
         //отримуємо переданий в це актівіті айді нотатки
-        noteId = getIntent().getIntExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", -1);
+        noteId = getIntent().getIntExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", 0);
         //просимо у бази даних цю нотатку
         note = db.getNote(noteId);
         color = note.getColor();
@@ -118,6 +117,10 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         dialog.setTitle("Choose the colour");
         dialog.setCancelable(true);
+        Window window = dialog.getWindow();
+        if(window != null) {
+            window.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        }
 
         View.OnClickListener radioButtonClickListener = new View.OnClickListener() {
             @Override
