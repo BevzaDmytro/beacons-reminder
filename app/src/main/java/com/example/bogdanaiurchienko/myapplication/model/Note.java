@@ -2,22 +2,25 @@ package com.example.bogdanaiurchienko.myapplication.model;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Note implements Serializable {
     private int id;
     private String name;
     private String text;
-    private String beacons;
+//    private String beacons;
     private String color;
-    private int colorId;
+    private ArrayList<Beacon> beacons;
 
-    public Note(int id, String name, String text, String beacons, String color, int colorId) {
+    public Note() {
+    }
+
+    public Note(int id, String name, String text, ArrayList<Beacon> beacons, String color) {
         this.id = id;
         this.name = name;
         this.text = text;
         this.beacons = beacons;
         this.color = color;
-        this.colorId = colorId;
     }
 
     public String getName() {
@@ -28,9 +31,19 @@ public class Note implements Serializable {
         return text;
     }
 
-    public String getBeacons() {
+    public ArrayList<Beacon> getBeacons() {
         return beacons;
     }
+
+    public String getBeaconsNames() {
+        StringBuilder s = new StringBuilder();
+        for(int i=0; i < beacons.size() - 1; i++){
+            s.append(beacons.get(i).getName()).append(", ");
+        }
+        s.append(beacons.get(beacons.size()-1).getName());
+        return s.toString();
+    }
+
 
     public int getId() {
         return id;
@@ -52,7 +65,7 @@ public class Note implements Serializable {
         this.text = text;
     }
 
-    public void setBeacons(String beacons) {
+    public void setBeacons(ArrayList<Beacon> beacons) {
         this.beacons = beacons;
     }
 
@@ -60,11 +73,4 @@ public class Note implements Serializable {
         this.color = color;
     }
 
-    public int getColorId() {
-        return colorId;
-    }
-
-    public void setColorId(int colorId) {
-        this.colorId = colorId;
-    }
 }

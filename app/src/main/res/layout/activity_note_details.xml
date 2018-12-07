@@ -23,36 +23,36 @@
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:importantForAutofill="no" />
+        tools:ignore="Autofill,LabelFor" />
 
     <EditText
         android:id="@+id/noteText"
         android:layout_width="0dp"
-        android:layout_height="286dp"
+        android:layout_height="278dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteName"
-        android:importantForAutofill="no" />
+        tools:ignore="Autofill,LabelFor" />
 
     <TextView
         android:id="@+id/noteBeacons"
-        android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="8dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noteText"
         app:layout_constraintVertical_bias="0.21" />

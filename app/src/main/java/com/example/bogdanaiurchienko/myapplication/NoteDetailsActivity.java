@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Objects;
@@ -28,17 +29,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
     TextView noteBeaconsView;
     String color;
 
-//    HashMap<String, ColorClass> colors = new HashMap<>();
-//    {
-//        colors.put("color1", new ColorClass( "Honey Suckle", "#fcc875"));
-//        colors.put("color2", new ColorClass( "Warm Gray", "#baa896"));
-//        colors.put("color3", new ColorClass( "Putty", "#e6ccb5"));
-//        colors.put("color4", new ColorClass( "Faded Rose", "#e38b75"));
-//        colors.put("color5", new ColorClass( "Linen", "#eae2d6"));
-//        colors.put("color6", new ColorClass( "Oyster", "#d5c3aa"));
-//        colors.put("color7", new ColorClass( "Biscotti", "#ebb582"));
-//        colors.put("color8", new ColorClass( "Hazelnut", "#d6c6b9"));
-//    }
     LinkedHashMap<String, String> colors = new LinkedHashMap<>();
     {
         colors.put("Honey Suckle", "#fcc875");
@@ -58,8 +48,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
         colors.put("Hazelnut", "#d6c6b9");
         colors.put("#d6c6b9", "Hazelnut");
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,12 +90,12 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
         //отримуємо батьківський контейнер (щоб поставити його колір, тобто колір бекграунда)
         root = noteNameView.getRootView();
-        setTheBGColor(color);
+        setTheBGColor();
 
         //виводимо текст нотатки в поля
         noteNameView.setText(note.getName());
         noteTextView.setText(note.getText());
-        noteBeaconsView.setText(note.getBeacons());
+        noteBeaconsView.setText(note.getBeaconsNames());
     }
 
     //зберігаємо усі зміни в бд, коли користувач нажимає кнопку "назад"
@@ -119,21 +107,70 @@ public class NoteDetailsActivity extends AppCompatActivity {
         note.setText(noteTextView.getText().toString());
     }
 
-    //тут викликаємо актівіті вибору кольору
+    //тут викликаємо діалог вибору кольору
     public void setColour(View v) {
 
         final Dialog dialog = new Dialog(NoteDetailsActivity.this);
         dialog.setContentView(R.layout.set_color);
 
         dialog.setTitle("Choose the colour");
+        dialog.setCancelable(true);
 
-        if(note.getColorId() != -1) {
-            RadioGroup radioGroup = dialog.findViewById(R.id.colorRadioGroup);
-            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(note.getColorId());
-            radioButton.setChecked(true);
+        View.OnClickListener radioButtonClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RadioButton rb = (RadioButton)v;
+                switch (rb.getId()) {
+                    case R.id.color1: color = "#fcc875";
+                        break;
+                    case R.id.color2: color = "#baa896";
+                        break;
+                    case R.id.color3: color = "#e6ccb5";
+                        break;
+                    case R.id.color4: color = "#e38b75";
+                        break;
+                    case R.id.color5: color = "#eae2d6";
+                        break;
+                    case R.id.color6: color = "#d5c3aa";
+                        break;
+                    case R.id.color7: color = "#ebb582";
+                        break;
+                    case R.id.color8: color = "#d6c6b9";
+                        break;
+                    default:
+                        break;
+                }
+                note.setColor(color);
+            }
+        };
+
+        ArrayList <RadioButton> buttons = new ArrayList<>();
+
+        buttons.add((RadioButton) dialog.findViewById(R.id.color1));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color2));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color3));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color4));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color5));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color6));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color7));
+        buttons.add((RadioButton) dialog.findViewById(R.id.color8));
+
+        for(RadioButton btn: buttons){
+            btn.setOnClickListener(radioButtonClickListener);
+            if(Objects.equals(colors.get(btn.getText().toString()), note.getColor())) {
+                btn.setChecked(true);
+            }
         }
-        //there are a lot of settings, for dialog, check them all out!
-        //set up button
+
+        dialog.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTheBGColor();
+                dialog.dismiss();
+            }
+        });
+
+
         dialog.findViewById(R.id.CancelButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,81 +178,25 @@ public class NoteDetailsActivity extends AppCompatActivity {
             }
         });
 
-        //set up button
-        dialog.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RadioGroup radioGroup = dialog.findViewById(R.id.colorRadioGroup);
-                if (radioGroup!= null && radioGroup.getCheckedRadioButtonId() != -1)
-                {
-                    int index = radioGroup.getCheckedRadioButtonId();
-                    note.setColorId(index);
-                    String colorName = ((RadioButton)dialog.findViewById(index)).getText().toString();
-                    note.setColor(colors.get(colorName));
-                    System.out.println(colorName + "   " + index);
-                    color = note.getColor();
-                }
-                dialog.dismiss();
-            }
-        });
-        //now that the dialog is set up, it's time to show it
         dialog.show();
     }
 
     //тут викликаємо актівіті вибору біконів
     public void setBeacons(View v) {
 
+
     }
 
     //тут видаляємо нотатку і повертаємось на новий екран
     public void deleteNote(View v) {
-        
+        db.deleteNote(noteId);
+        finish();
     }
 
-    private void setTheBGColor(String colorCode) {
+    private void setTheBGColor() {
         //ставимо колір бекграунда той, що записаний у нотатці
-        root.setBackgroundColor(Color.parseColor(colorCode));
+        root.setBackgroundColor(Color.parseColor(color));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        System.out.print("on resume!!!!!");
-        setTheBGColor(color);
-    }
 }
 
-
-
-
-class ColorClass{
-    String name;
-    String code;
-
-    public ColorClass(String name, String code) {
-        this.name = name;
-        this.code = code;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ColorClass color = (ColorClass) o;
-        return Objects.equals(code, color.code);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(code);
-    }
-}

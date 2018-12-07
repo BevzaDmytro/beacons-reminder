@@ -5,12 +5,24 @@ import java.util.ArrayList;
 public class DataBaseEmulator {
     private static final DataBaseEmulator ourInstance = new DataBaseEmulator();
     private ArrayList<Note> notes = new ArrayList<>();
+    private ArrayList<Beacon> beacons = new ArrayList<>();
 
     public static DataBaseEmulator getInstance() {
         return ourInstance;
     }
 
     private DataBaseEmulator() {
+        String[] beaconsNames = new String[]{"kitchen", "outdoor", "the shop", "the school",
+                "in parents' home", "bathroom", "bedroom"};
+        String[] beaconsLocations = new String[]{"Poltava, Ukraine", "USA, Boston",
+                "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine"};
+        String[] beaconsCodes = new String[]{"sdkjfsjf;skdjfs;df", "dfkjhlifhuasdfasdfas", "sldfhaiuefwe",
+                "sdlfjaw;iofh;woef", "sljfa;oifhowi","sldfjhaiudf;f",
+                "ldskjf;isodh;fosduf"};
+
+        for(int i = 0; i < beaconsNames.length; i++){
+            beacons.add(new Beacon(beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
+        }
 
         String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
                 "One more", " and again", "again ransom ....", "I got rid of ideas/",
@@ -23,17 +35,18 @@ public class DataBaseEmulator {
                 "ullalala", "find me sombody to-ou-oo-o-o loooooove",
                 "bohemian rhapsody"};
 
-        String[] beacons = new String[]{"kitchen", "kitchen outdoor", "the shop",
-                "the school", "kitchen in parents' home", "bathroom", "kitchen outdoor",
-                "kitchen bedroom bathroom outdoor"};
+
         String[] colors = new String[]{ "#d2d4dc", "#dcedc1",
                 "#ffd3b6", "#ffaaa5", "#ff8b94", "#a8e6cf",
                 "#ffd3b6", "#ff8b94"} ;
 
-        for(int i = 0; i < beacons.length; i++){
-            notes.add(new Note(i, names[i], texts[i], beacons[i], colors[i], 5));
+        for(int i = 0; i < names.length; i++){
+            notes.add(new Note(i, names[i], texts[i], beacons, colors[i]));
 
         }
+
+
+
     }
 
 
@@ -46,16 +59,25 @@ public class DataBaseEmulator {
         else return null;
     }
 
-    public void addNote(String name, String text, String beacons, String color, int colorId) {
-        notes.add(new Note(notes.size(), name, text, beacons, color, colorId));
+    public int addNote() {
+        notes.add(new Note());
+        return notes.size() - 1;
     }
 
-    public void editNote(int id, String name, String text, String beacons, String color) {
+    public void editNote(int id, String name, String text, String color, String[] beaconsCodes) {
         Note note = notes.get(id);
         note.setId(id);
         note.setName(name);
         note.setText(text);
-        note.setBeacons(beacons);
+        ArrayList<Beacon> b = new ArrayList<>();
+        for(String code: beaconsCodes){
+            b.add(beacons.get(beacons.indexOf(new Beacon(code))));
+        }
+        note.setBeacons(b);
         note.setColor(color);
+    }
+
+    public void deleteNote(int id){
+        notes.remove(id);
     }
 }

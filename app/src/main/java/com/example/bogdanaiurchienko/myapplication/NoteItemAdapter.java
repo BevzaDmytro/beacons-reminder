@@ -52,7 +52,7 @@ public class NoteItemAdapter extends BaseAdapter {
         TextView noteBeacons = view.findViewById(R.id.noteBeacons);
         noteName.setText(notes[i].getName());
         noteText.setText(notes[i].getText());
-        noteBeacons.setText(notes[i].getBeacons());
+        noteBeacons.setText(notes[i].getBeaconsNames());
         return view;
     }
 }

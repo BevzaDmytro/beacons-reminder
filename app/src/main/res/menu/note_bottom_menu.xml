@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:id="@+id/set_color"
+    android:title="@string/set_note_color"
+    android:icon="@drawable/ic_color_lens_black_24dp" />
+<item android:id="@+id/set_beacons"
+    android:title="@string/set_note_beacons"
+    android:icon="@drawable/ic_add" />
+<item android:id="@+id/delete"
+    android:title="@string/delete_note"
+    android:icon="@drawable/ic_delete_black_24dp"
+    />
+</menu>

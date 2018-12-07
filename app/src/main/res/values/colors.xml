@@ -3,6 +3,7 @@
     <color name="colorPrimary">#262d2c</color>
     <color name="colorPrimaryDark">#080e0d</color>
     <color name="colorAccent">#7e3b53</color>
+    <color name="colorLight">#c4c4c4</color>
     <color name="red">#c11010</color>
     <color name="blue">#5022da</color>
     <color name="violet">#530e6c</color>
@@ -10,6 +11,6 @@
     <color name="yellow">#d3da4d</color>
     <color name="pink">#ff4a8b</color>
     <color name="orange">#ff672b</color>
-    <color name="green">#2b9e3a</color>
-    <color name="lightGreen">#a6f24f</color>
+    <color name="green">#c4c4c4</color>
+    <color name="lightGreen">#939393</color>
 </resources>

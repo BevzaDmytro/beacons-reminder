@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/noteName"
-            android:layout_width="339dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -30,7 +30,7 @@
 
         <TextView
             android:id="@+id/noteText"
-            android:layout_width="339dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/noteName"
             android:layout_alignParentTop="true"
@@ -45,12 +45,12 @@
 
         <TextView
             android:id="@+id/noteBeacons"
-            android:layout_width="335dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="false"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="11dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="casual"
             android:textAllCaps="false"
