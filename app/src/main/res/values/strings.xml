@@ -9,4 +9,21 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    <string name="set_note_color">Colour</string>
+    <string name="set_note_beacons">Beacons</string>
+    <string name="delete_note">Delete</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string name="color_1">Honey Suckle</string>
+    <string name="color_2">Warm Gray</string>
+    <string name="color_3">Putty</string>
+    <string name="color_4">Faded Rose</string>
+    <string name="color_5">Linen</string>
+    <string name="color_6">Oyster</string>
+    <string name="color_7">Biscotti</string>
+    <string name="color_8">Hazelnut</string>
 </resources>

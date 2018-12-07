@@ -9,13 +9,15 @@ public class Note implements Serializable {
     private String text;
     private String beacons;
     private String color;
+    private int colorId;
 
-    public Note(int id, String name, String text, String beacons, String color) {
+    public Note(int id, String name, String text, String beacons, String color, int colorId) {
         this.id = id;
         this.name = name;
         this.text = text;
         this.beacons = beacons;
         this.color = color;
+        this.colorId = colorId;
     }
 
     public String getName() {
@@ -56,5 +58,13 @@ public class Note implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
     }
 }

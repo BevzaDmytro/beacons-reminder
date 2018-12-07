@@ -49,7 +49,7 @@ public class NoteItemAdapter extends BaseAdapter {
         view.setBackgroundColor(Color.parseColor(notes[i].getColor()));
         TextView noteName = view.findViewById(R.id.noteName);
         TextView noteText = view.findViewById(R.id.noteText);
-        TextView noteBeacons = view.findViewById(R.id.noteBeakons);
+        TextView noteBeacons = view.findViewById(R.id.noteBeacons);
         noteName.setText(notes[i].getName());
         noteText.setText(notes[i].getText());
         noteBeacons.setText(notes[i].getBeacons());

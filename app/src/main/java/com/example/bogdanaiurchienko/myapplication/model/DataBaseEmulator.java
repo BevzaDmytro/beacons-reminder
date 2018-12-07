@@ -31,7 +31,7 @@ public class DataBaseEmulator {
                 "#ffd3b6", "#ff8b94"} ;
 
         for(int i = 0; i < beacons.length; i++){
-            notes.add(new Note(i, names[i], texts[i], beacons[i], colors[i]));
+            notes.add(new Note(i, names[i], texts[i], beacons[i], colors[i], 5));
 
         }
     }
@@ -46,8 +46,8 @@ public class DataBaseEmulator {
         else return null;
     }
 
-    public void addNote(String name, String text, String beacons, String color) {
-        notes.add(new Note(notes.size(), name, text, beacons, color));
+    public void addNote(String name, String text, String beacons, String color, int colorId) {
+        notes.add(new Note(notes.size(), name, text, beacons, color, colorId));
     }
 
     public void editNote(int id, String name, String text, String beacons, String color) {

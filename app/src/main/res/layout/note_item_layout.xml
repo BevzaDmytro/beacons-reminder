@@ -44,7 +44,7 @@
             app:layout_constraintTop_toBottomOf="@+id/noteName" />
 
         <TextView
-            android:id="@+id/noteBeakons"
+            android:id="@+id/noteBeacons"
             android:layout_width="335dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="false"
