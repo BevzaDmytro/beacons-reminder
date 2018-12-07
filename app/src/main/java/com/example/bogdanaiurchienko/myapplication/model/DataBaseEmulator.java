@@ -80,4 +80,13 @@ public class DataBaseEmulator {
     public void deleteNote(int id){
         notes.remove(id);
     }
+
+
+    public ArrayList<Beacon> getBeacons() {
+        return beacons;
+    }
+
+    public void setBeacons(ArrayList<Beacon> beacons) {
+        this.beacons = beacons;
+    }
 }

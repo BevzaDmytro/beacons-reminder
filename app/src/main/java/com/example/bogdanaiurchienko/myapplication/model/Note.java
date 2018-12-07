@@ -12,10 +12,10 @@ public class Note implements Serializable {
     private String color;
     private ArrayList<Beacon> beacons;
 
-    public Note() {
+    Note() {
     }
 
-    public Note(int id, String name, String text, ArrayList<Beacon> beacons, String color) {
+    Note(int id, String name, String text, ArrayList<Beacon> beacons, String color) {
         this.id = id;
         this.name = name;
         this.text = text;
@@ -40,7 +40,9 @@ public class Note implements Serializable {
         for(int i=0; i < beacons.size() - 1; i++){
             s.append(beacons.get(i).getName()).append(", ");
         }
-        s.append(beacons.get(beacons.size()-1).getName());
+        if(beacons.size()-1 >= 0)  {
+            s.append(beacons.get(beacons.size()-1).getName());
+        }
         return s.toString();
     }
 

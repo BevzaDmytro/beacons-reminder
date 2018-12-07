@@ -1,17 +1,20 @@
 package com.example.bogdanaiurchienko.myapplication;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 import com.example.bogdanaiurchienko.myapplication.model.Note;
+import com.example.bogdanaiurchienko.myapplication.select.beacons.ListViewWithCheckboxActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -183,8 +186,10 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
     //тут викликаємо актівіті вибору біконів
     public void setBeacons(View v) {
-
-
+        Intent intent = new Intent(this, ListViewWithCheckboxActivity.class);
+        intent.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteId);
+        intent.putExtra("com.example.bogdanaiurchienko.myapplication.BG_COLOR", note.getColor());
+        startActivity(intent);
     }
 
     //тут видаляємо нотатку і повертаємось на новий екран
@@ -198,5 +203,10 @@ public class NoteDetailsActivity extends AppCompatActivity {
         root.setBackgroundColor(Color.parseColor(color));
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        noteBeaconsView.setText(note.getBeaconsNames());
+    }
 }
 

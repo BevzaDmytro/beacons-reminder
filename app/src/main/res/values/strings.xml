@@ -27,4 +27,5 @@
     <string name="color_6">Oyster</string>
     <string name="color_7">Biscotti</string>
     <string name="color_8">Hazelnut</string>
+    <string name="select_none">Select None</string>
 </resources>
