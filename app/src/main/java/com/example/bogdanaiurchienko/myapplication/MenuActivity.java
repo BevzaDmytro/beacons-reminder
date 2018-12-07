@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -26,6 +24,7 @@ public class MenuActivity extends AppCompatActivity
     final DataBaseEmulator db = DataBaseEmulator.getInstance();
     ListView notesView;
     NoteItemAdapter noteItemAdapter;
+    int lastNote;
 
 
     @Override
@@ -35,12 +34,14 @@ public class MenuActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //кнопка створення нової нотатки
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
+                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", db.getNewNoteId());
+                startActivity(showNoteDetail);
             }
         });
 
@@ -53,7 +54,7 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        //відображаємо список усіх нотаток, вішаємо на них екшен - відкрити актівіті нотатки
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
@@ -61,7 +62,8 @@ public class MenuActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
-                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", i);
+                lastNote = i;
+                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteItemAdapter.getCount() -1 - i);
                 startActivity(showNoteDetail);
             }
         });
@@ -78,15 +80,15 @@ public class MenuActivity extends AppCompatActivity
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -120,6 +122,11 @@ public class MenuActivity extends AppCompatActivity
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
-        System.out.println("main onRestart");
+        notesView.post(new Runnable() {
+            @Override
+            public void run() {
+                notesView.smoothScrollToPosition(lastNote+1);
+            }
+        });
     }
 }

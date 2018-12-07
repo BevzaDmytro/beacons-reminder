@@ -23,7 +23,7 @@ public class NoteItemAdapter extends BaseAdapter {
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.notes = new Note[notes.size()];
         for(int i = 0; i < this.notes.length; i++){
-            this.notes[i] = notes.get(i);
+            this.notes[i] = notes.get(this.notes.length - 1 - i);
         }
     }
 

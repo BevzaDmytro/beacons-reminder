@@ -143,7 +143,6 @@ public class NoteDetailsActivity extends AppCompatActivity {
                     default:
                         break;
                 }
-                note.setColor(color);
             }
         };
 
@@ -168,6 +167,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
         dialog.findViewById(R.id.OkButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                note.setColor(color);
                 setTheBGColor();
                 dialog.dismiss();
             }

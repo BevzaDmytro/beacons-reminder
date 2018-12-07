@@ -11,18 +11,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".NoteDetailsActivity" />
+
+        <activity
+            android:name=".NoteDetailsActivity"
+            android:label="@string/title_activity_menu"
+            android:parentActivityName=".MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".select.beacons.ListViewWithCheckboxActivity" />
+        
+        <activity
+            android:name=".select.beacons.ListViewWithCheckboxActivity"
+            android:parentActivityName=".NoteDetailsActivity"
+            />
     </application>
 
 </manifest>

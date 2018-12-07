@@ -59,7 +59,7 @@ public class DataBaseEmulator {
         else return null;
     }
 
-    public int addNote() {
+    public int getNewNoteId() {
         notes.add(new Note());
         return notes.size() - 1;
     }
