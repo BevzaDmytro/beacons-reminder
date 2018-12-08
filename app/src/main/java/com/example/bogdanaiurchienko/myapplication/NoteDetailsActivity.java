@@ -107,6 +107,8 @@ public class NoteDetailsActivity extends AppCompatActivity {
         System.out.println("onBackPressed    "+noteNameView.getText().toString() + "   " + noteTextView.getText().toString());
         note.setName(noteNameView.getText().toString());
         note.setText(noteTextView.getText().toString());
+
+        db.addNote(note);
     }
 
     //тут викликаємо діалог вибору кольору

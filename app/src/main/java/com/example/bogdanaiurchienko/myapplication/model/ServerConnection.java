@@ -33,13 +33,22 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
         String adress = this.hostName;
         StringBuilder sb = new StringBuilder();
 
-        if(strings[0].equals("get") && strings[1].equals("all")){
-            adress =this.hostName+"?action=select&id=all";
+        if(strings[0].equals("get")){
+            switch (strings[1]){
+                case "beacons":
+                    adress =this.hostName+"?action=select&id=beacons";
+                    break;
+
+                case "notes":
+                    adress =this.hostName+"?action=select&id=notes";
+                    break;
+
+                default:
+                    adress =this.hostName+"?action=select&id="+strings[1];
+                    break;
+            }
         }
-        else if(strings[0].equals("get") && !strings[1].equals("all")){
-            adress =this.hostName+"?action=select&id="+strings[1];
-        }
-        else if(strings[0].equals("insert")){
+       else if(strings[0].equals("insert")){
             adress =this.hostName+"?action=insert&id="+strings[1];
         }
         else if(strings[0].equals("delete")){

@@ -24,15 +24,11 @@ import android.widget.TextView;
 
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
-<<<<<<< HEAD
-import com.example.bogdanaiurchienko.myapplication.model.ServerConnection;
 
-import java.net.MalformedURLException;
-=======
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 
 import java.util.ArrayList;
->>>>>>> dev
+
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -70,13 +66,8 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-<<<<<<< HEAD
+        db.updateNotesFromServer();
 
-
-
-=======
-        //відображаємо список усіх нотаток, вішаємо на них екшен - відкрити актівіті нотатки
->>>>>>> dev
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
@@ -135,6 +126,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
+        db.updateNotesFromServer();
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);

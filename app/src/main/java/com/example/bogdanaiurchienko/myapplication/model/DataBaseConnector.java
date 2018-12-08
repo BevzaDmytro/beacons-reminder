@@ -19,4 +19,9 @@ public interface DataBaseConnector {
 
     void setBeacons(ArrayList<Beacon> beacons);
 
+    void updateBeaconsFromServer();
+
+    void updateNotesFromServer();
+
+    void addNote(Note note);
 }

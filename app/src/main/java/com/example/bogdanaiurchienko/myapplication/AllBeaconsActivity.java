@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.example.bogdanaiurchienko.myapplication.model.Beacon;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
+import com.example.bogdanaiurchienko.myapplication.model.ServerConnection;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class AllBeaconsActivity extends AppCompatActivity {
     DataBaseConnector db = DataBaseEmulator.getInstance();
@@ -24,6 +26,9 @@ public class AllBeaconsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_beacond_activity);
+
+        db.updateBeaconsFromServer();
+
         //відображаємо список усіх біконів
         ListView allBeaconsView =  findViewById(R.id.all_beacons_list) ;
         BeaconItemAdapter beaconItemAdapter = new BeaconItemAdapter(this, db.getBeacons());
