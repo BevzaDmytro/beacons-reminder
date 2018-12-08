@@ -60,8 +60,9 @@ public class DataBaseEmulator {
     }
 
     public int addNote() {
-        notes.add(new Note());
-        return notes.size() - 1;
+//        notes.add(new Note());
+//        return notes.size() - 1;
+        return 0;
     }
 
     public void editNote(int id, String name, String text, String color, String[] beaconsCodes) {
@@ -89,4 +90,6 @@ public class DataBaseEmulator {
     public void setBeacons(ArrayList<Beacon> beacons) {
         this.beacons = beacons;
     }
+
+
 }

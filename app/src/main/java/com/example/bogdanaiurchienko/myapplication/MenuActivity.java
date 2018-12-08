@@ -103,7 +103,7 @@ public class MenuActivity extends AppCompatActivity
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
-            ServerConnection con = (ServerConnection) new ServerConnection().execute();
+            ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "Dima");
 
         } else if (id == R.id.nav_slideshow) {
 

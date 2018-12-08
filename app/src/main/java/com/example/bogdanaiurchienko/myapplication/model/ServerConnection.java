@@ -13,39 +13,59 @@ import java.net.URL;
 
 
 
-public class ServerConnection  extends AsyncTask<Void, Void, String> {
+public class ServerConnection  extends AsyncTask<String, Void, String> {
 
     private HttpURLConnection conn;
-    private String hostName = "http://192.168.0.102/test.php?id=Dima";
+    private String hostName = "http://192.168.0.102/test.php";
 
-    public  void request() throws MalformedURLException {
+    public ServerConnection(){
+
+    }
+
+    public void getRequest(String id){
 
     }
 
 
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected String doInBackground(String... strings) {
+        String adress = this.hostName;
+        StringBuilder sb = new StringBuilder();
+
+        if(strings[0].equals("get") && strings[1].equals("all")){
+            adress =this.hostName+"?action=select&id=all";
+        }
+        else if(strings[0].equals("get") && !strings[1].equals("all")){
+            adress =this.hostName+"?action=select&id="+strings[1];
+        }
+        else if(strings[0].equals("insert")){
+            adress =this.hostName+"?action=insert&id="+strings[1];
+        }
+        else if(strings[0].equals("delete")){
+            adress =this.hostName+"?action=delete&id="+strings[1];
+        }
+        else if(strings[0].equals("update")){
+            adress =this.hostName+"?action=update&id="+strings[1];
+        }
+
         try {
-            this.conn = (HttpURLConnection) new URL(this.hostName).openConnection();
+            this.conn = (HttpURLConnection) new URL(adress).openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("POST");
-            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
+//            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
             conn.setDoInput(true);
             conn.connect();
 
-            //////
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, "UTF-8"));
-            StringBuilder sb = new StringBuilder();
             String bfr_st = null;
             while ((bfr_st = br.readLine()) != null) {
                 sb.append(bfr_st);
             }
 
-            System.out.println("полный ответ сервера:\n"+ sb.toString());
             conn.disconnect();
             is.close(); // закроем поток
             br.close(); // закроем буфер
@@ -53,6 +73,9 @@ public class ServerConnection  extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "Success";
+        return sb.toString();
     }
+
+
+
 }
