@@ -2,12 +2,12 @@ package com.example.bogdanaiurchienko.myapplication.model;
 
 import java.util.ArrayList;
 
-public class DataBaseEmulator {
-    private static final DataBaseEmulator ourInstance = new DataBaseEmulator();
+public class DataBaseEmulator implements DataBaseConnector {
+    private static final DataBaseConnector ourInstance = new DataBaseEmulator();
     private ArrayList<Note> notes = new ArrayList<>();
     private ArrayList<Beacon> beacons = new ArrayList<>();
 
-    public static DataBaseEmulator getInstance() {
+    public static DataBaseConnector getInstance() {
         return ourInstance;
     }
 
@@ -21,7 +21,7 @@ public class DataBaseEmulator {
                 "ldskjf;isodh;fosduf"};
 
         for(int i = 0; i < beaconsNames.length; i++){
-            beacons.add(new Beacon(beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
+            beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
         }
 
         String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
@@ -59,10 +59,17 @@ public class DataBaseEmulator {
         else return null;
     }
 
+
     public int addNote() {
 //        notes.add(new Note());
 //        return notes.size() - 1;
         return 0;
+    }
+
+    public int getNewNoteId(){
+        notes.add(new Note());
+        return notes.size() - 1;
+
     }
 
     public void editNote(int id, String name, String text, String color, String[] beaconsCodes) {

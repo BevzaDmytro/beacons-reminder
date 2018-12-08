@@ -8,14 +8,13 @@ public class Note implements Serializable {
     private int id;
     private String name;
     private String text;
-//    private String beacons;
     private String color;
     private ArrayList<Beacon> beacons;
 
-    Note(int id, String name, String text) {
-        this.id = id;
-        this.name = name;
-        this.text =  text;
+
+    Note() {
+        this.color = "#939393";
+        this.beacons = new ArrayList<>();
     }
 
     Note(int id, String name, String text, ArrayList<Beacon> beacons, String color) {
