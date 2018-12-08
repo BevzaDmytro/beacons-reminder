@@ -3,8 +3,11 @@ package com.example.bogdanaiurchienko.myapplication;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -28,8 +31,10 @@ import com.example.bogdanaiurchienko.myapplication.model.Note;
 
 import java.util.ArrayList;
 
+
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     final DataBaseConnector db = DataBaseEmulator.getInstance();
     ListView notesView;
@@ -43,6 +48,7 @@ public class MenuActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //кнопка створення нової нотатки
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +70,9 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        TextView userNameView = navigationView.getHeaderView(0).findViewById(R.id.user_name_view);
+        userNameView.setText(preferences.getString("user_name", "User"));
+
         //відображаємо список усіх нотаток, вішаємо на них екшен - відкрити актівіті нотатки
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
@@ -77,6 +86,7 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(showNoteDetail);
             }
         });
+
     }
 
     @Override
@@ -105,11 +115,18 @@ public class MenuActivity extends AppCompatActivity
             startActivity(showAllBeacons);
         } else if (id == R.id.settings) {
 
+            Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(settingsActivity);
 
         } else if (id == R.id.help) {
 
 
         } else if (id == R.id.feedback) {
+            String OUR_MAIL_ADDRESS = "veggimail6@gmail.com";
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                    "mailto", OUR_MAIL_ADDRESS, null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Trigger Reminders");
+            startActivity(Intent.createChooser(emailIntent, "Send email..."));
 
         }
 
@@ -121,6 +138,9 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
+        TextView userNameView = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name_view);
+        userNameView.setText(PreferenceManager.getDefaultSharedPreferences(this).getString("user_name", "User"));
+
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
