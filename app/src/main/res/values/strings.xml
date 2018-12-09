@@ -1,15 +1,10 @@
 <resources>
     <string name="app_name">Precious app</string>
     <string name="note_name">Note Name</string>
-    <string name="note_text">Put here your note text</string>
-    <string name="title_activity_another_activity">another_activity</string>
     <string name="title_activity_menu">Reminders</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="set_note_color">Colour</string>
     <string name="set_note_beacons">Beacons</string>
@@ -41,62 +36,11 @@
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
 
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
 
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
     <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value" />
 
     <string name="pref_title_new_message_notifications">Beacon notifications</string>
 
@@ -105,6 +49,12 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="enable_beacon_scanning">Enable beacon scanning</string>
-    <string name="title_activity_onboard">OnboardActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title1">Get all from your bluetooth</string>
+    <string name="keep_it_on_to_get_reminded">Keep it on to get reminded</string>
+    <string name="title2">Get notification bound to the beacons</string>
+    <string name="title22">Never forget anything</string>
+    <string name="desc1">Keeps your data safe</string>
+    <string name="title11">Cloud limitless database</string>
+    <string name="adjust_the_notes_to_your_mood">Adjust the notes to your mood</string>
+    <string name="colorful">Colorful simple design</string>
 </resources>

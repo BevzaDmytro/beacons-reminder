@@ -13,12 +13,12 @@ public class DataBaseEmulator implements DataBaseConnector {
 
     private DataBaseEmulator() {
         String[] beaconsNames = new String[]{"kitchen", "outdoor", "the shop", "the school",
-                "in parents' home", "bathroom", "bedroom"};
+                "in parents' home", "bathroom", "bedroom", "new beacon"};
         String[] beaconsLocations = new String[]{"Poltava, Ukraine", "USA, Boston",
-                "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine"};
+                "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine",  "Kiev, Ukraine"};
         String[] beaconsCodes = new String[]{"sdkjfsjf;skdjfs;df", "dfkjhlifhuasdfasdfas", "sldfhaiuefwe",
                 "sdlfjaw;iofh;woef", "sljfa;oifhowi","sldfjhaiudf;f",
-                "ldskjf;isodh;fosduf"};
+                "ldskjf;isodh;fosduf", "dfkja;dsoifja;odijf"};
 
         for(int i = 0; i < beaconsNames.length; i++){
             beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
@@ -31,17 +31,16 @@ public class DataBaseEmulator implements DataBaseConnector {
         String[] texts = new String[]{"to do the dishes", "don't forget to do it!!", "i don't know what to write",
                 "random text",
                 "lets pretend there is some sensedfhsfhfghfghfghfdghfg fghf gh fg h fg hfg hf gh fg\n " +
-                        "\n\n sdkfjsdhfsdf\n\nasdfhsdjfhsidff",
+                        "sdkfjsdhfsdf\nasdfhsdjfhsidff",
                 "ullalala", "find me sombody to-ou-oo-o-o loooooove",
                 "bohemian rhapsody"};
 
 
-        String[] colors = new String[]{ "#d2d4dc", "#dcedc1",
-                "#ffd3b6", "#ffaaa5", "#ff8b94", "#a8e6cf",
-                "#ffd3b6", "#ff8b94"} ;
+        String[] colors = new String[]{"#baa896", "#e6ccb5", "#eae2d6", "#d5c3aa", "#d6c6b9",
+                "#eae2d6", "#d5c3aa", "#d6c6b9"} ;
 
         for(int i = 0; i < names.length; i++){
-            notes.add(new Note(i, names[i], texts[i], beacons, colors[i]));
+            notes.add(new Note(i, names[i], texts[i], new ArrayList<>(beacons.subList(i, (i < names.length -2) ?  i+2 : i+1)), colors[i]));
 
         }
 

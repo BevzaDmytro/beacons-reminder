@@ -1,6 +1,7 @@
 package com.example.bogdanaiurchienko.myapplication;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,15 +41,19 @@ public class MenuActivity extends AppCompatActivity
     ListView notesView;
     NoteItemAdapter noteItemAdapter;
     int lastNote;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        staerIntroActivitu();
+        
         //кнопка створення нової нотатки
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +94,42 @@ public class MenuActivity extends AppCompatActivity
 
     }
 
+
+    private void staerIntroActivitu(){
+
+        //  Declare a new thread to do a preference check
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = preferences.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(MenuActivity.this, IntroActivity.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = preferences.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
+
+
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -119,7 +160,8 @@ public class MenuActivity extends AppCompatActivity
             startActivity(settingsActivity);
 
         } else if (id == R.id.help) {
-
+            Intent i = new Intent(MenuActivity.this, IntroActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.feedback) {
             String OUR_MAIL_ADDRESS = "veggimail6@gmail.com";
