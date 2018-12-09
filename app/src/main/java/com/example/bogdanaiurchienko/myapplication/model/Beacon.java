@@ -16,7 +16,7 @@ public class Beacon {
         this.code = code;
     }
 
-    Beacon(String code) {
+    public Beacon(String code) {
         this.code = code;
     }
 

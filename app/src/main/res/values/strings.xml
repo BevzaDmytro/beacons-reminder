@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Precious app</string>
+    <string name="app_name">Trigger Reminders</string>
     <string name="note_name">Note Name</string>
     <string name="title_activity_menu">Reminders</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

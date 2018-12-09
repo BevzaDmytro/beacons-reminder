@@ -2,11 +2,16 @@ package com.example.bogdanaiurchienko.myapplication;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -30,7 +35,10 @@ import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 public class MenuActivity extends AppCompatActivity
@@ -47,6 +55,8 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        createNotificationChannel();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -91,8 +101,9 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(showNoteDetail);
             }
         });
-
     }
+
+
 
 
     private void staerIntroActivitu(){
@@ -192,6 +203,8 @@ public class MenuActivity extends AppCompatActivity
                 notesView.smoothScrollToPosition(lastNote+1);
             }
         });
+
+        createNotificationChannel();
     }
 
     class NoteItemAdapter extends BaseAdapter {
@@ -236,6 +249,22 @@ public class MenuActivity extends AppCompatActivity
             noteText.setText(note.getText());
             noteBeacons.setText(note.getBeaconsNames());
             return view;
+        }
+    }
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "notificationChannel";
+            String description = "for notes and beacons";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
         }
     }
 }

@@ -1,11 +1,15 @@
 package com.example.bogdanaiurchienko.myapplication.model;
 
+import java.net.NetworkInterface;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class DataBaseEmulator implements DataBaseConnector {
     private static final DataBaseConnector ourInstance = new DataBaseEmulator();
     private ArrayList<Note> notes = new ArrayList<>();
     private ArrayList<Beacon> beacons = new ArrayList<>();
+    private String mac;
 
     public static DataBaseConnector getInstance() {
         return ourInstance;
@@ -45,6 +49,8 @@ public class DataBaseEmulator implements DataBaseConnector {
         }
 
 
+
+        this.mac = getMac();
 
     }
 
@@ -87,5 +93,33 @@ public class DataBaseEmulator implements DataBaseConnector {
 
     public void setBeacons(ArrayList<Beacon> beacons) {
         this.beacons = beacons;
+    }
+
+    static private String getMac() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif: all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b: macBytes) {
+                    //res1.append(Integer.toHexString(b & 0xFF) + ":");
+                    res1.append(String.format("%02X:", b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "02:00:00:00:00:00";
     }
 }
