@@ -13,6 +13,7 @@ public class Note implements Serializable {
     private String color;
     private ArrayList<Beacon> beacons;
 
+
     Note() {
         this.color = "#cac7d7";
         this.beacons = new ArrayList<>();

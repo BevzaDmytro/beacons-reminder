@@ -1,6 +1,10 @@
 package com.example.bogdanaiurchienko.myapplication.model;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class DataBaseEmulator implements DataBaseConnector {
     private static final DataBaseConnector ourInstance = new DataBaseEmulator();
@@ -11,18 +15,51 @@ public class DataBaseEmulator implements DataBaseConnector {
         return ourInstance;
     }
 
-    private DataBaseEmulator() {
-        String[] beaconsNames = new String[]{"kitchen", "outdoor", "the shop", "the school",
-                "in parents' home", "bathroom", "bedroom", "new beacon"};
-        String[] beaconsLocations = new String[]{"Poltava, Ukraine", "USA, Boston",
-                "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine",  "Kiev, Ukraine"};
-        String[] beaconsCodes = new String[]{"sdkjfsjf;skdjfs;df", "dfkjhlifhuasdfasdfas", "sldfhaiuefwe",
-                "sdlfjaw;iofh;woef", "sljfa;oifhowi","sldfjhaiudf;f",
-                "ldskjf;isodh;fosduf", "dfkja;dsoifja;odijf"};
-
-        for(int i = 0; i < beaconsNames.length; i++){
-            beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
+    public void updateBeaconsFromServer(){
+        String jsonBeacons = "";
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "beacons");
+        try {
+            jsonBeacons = con.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        Gson gson = new Gson();
+        TypeToken<ArrayList<Beacon>> token = new TypeToken<ArrayList<Beacon>>() {};
+        this.beacons = gson.fromJson(jsonBeacons, token.getType());
+    }
+
+    public void updateNotesFromServer(){
+        String jsonNotes = "";
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "notes");
+        try {
+            jsonNotes = con.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        TypeToken<ArrayList<Note>> token = new TypeToken<ArrayList<Note>>() {};
+        this.notes = gson.fromJson(jsonNotes, token.getType());
+    }
+
+    private DataBaseEmulator() {
+//        String[] beaconsNames = new String[]{"kitchen", "outdoor", "the shop", "the school",
+//                "in parents' home", "bathroom", "bedroom"};
+//        String[] beaconsLocations = new String[]{"Poltava, Ukraine", "USA, Boston",
+//                "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine"};
+//        String[] beaconsCodes = new String[]{"sdkjfsjf;skdjfs;df", "dfkjhlifhuasdfasdfas", "sldfhaiuefwe",
+//                "sdlfjaw;iofh;woef", "sljfa;oifhowi","sldfjhaiudf;f",
+//                "ldskjf;isodh;fosduf"};
+//
+//        for(int i = 0; i < beaconsNames.length; i++){
+//            beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
+//        }
+
+
+
 
         String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
                 "One more", " and again", "again ransom ....", "I got rid of ideas/",
@@ -54,11 +91,18 @@ public class DataBaseEmulator implements DataBaseConnector {
     }
 
     public Note getNote(int i){
+        //dv ?
+        this.updateNotesFromServer();
         if(i < notes.size()) return notes.get(i);
         else return null;
     }
 
-    public int getNewNoteId() {
+
+    public void addNote(Note note) {
+
+    }
+
+    public int getNewNoteId(){
         notes.add(new Note());
         return notes.size() - 1;
     }
@@ -77,6 +121,19 @@ public class DataBaseEmulator implements DataBaseConnector {
     }
 
     public void deleteNote(int id){
+        String response = "";
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(id));
+        try {
+            response = con.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if(!response.equals("Success")){
+            return;
+        }
+
         notes.remove(id);
     }
 
@@ -88,4 +145,6 @@ public class DataBaseEmulator implements DataBaseConnector {
     public void setBeacons(ArrayList<Beacon> beacons) {
         this.beacons = beacons;
     }
+
+
 }

@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
+
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 
 import java.util.ArrayList;
@@ -78,7 +79,10 @@ public class MenuActivity extends AppCompatActivity
         TextView userNameView = navigationView.getHeaderView(0).findViewById(R.id.user_name_view);
         userNameView.setText(preferences.getString("user_name", "User"));
 
+        db.updateNotesFromServer();
+
         //відображаємо список усіх нотаток, вішаємо на них екшен - відкрити актівіті нотатки
+
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
@@ -140,11 +144,13 @@ public class MenuActivity extends AppCompatActivity
         }
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+
 
         if (id == R.id.add_note) {
             lastNote = 0;
@@ -183,6 +189,7 @@ public class MenuActivity extends AppCompatActivity
         TextView userNameView = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name_view);
         userNameView.setText(PreferenceManager.getDefaultSharedPreferences(this).getString("user_name", "User"));
 
+        db.updateNotesFromServer();
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
