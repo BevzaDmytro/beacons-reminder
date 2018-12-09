@@ -20,9 +20,7 @@ public class DataBaseEmulator implements DataBaseConnector {
         ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "beacons");
         try {
             jsonBeacons = con.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         Gson gson = new Gson();
@@ -35,9 +33,7 @@ public class DataBaseEmulator implements DataBaseConnector {
         ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "notes");
         try {
             jsonNotes = con.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         Gson gson = new Gson();
@@ -58,28 +54,29 @@ public class DataBaseEmulator implements DataBaseConnector {
 //            beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
 //        }
 
+                updateBeaconsFromServer();
+                updateNotesFromServer();
 
-
-
-        String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
-                "One more", " and again", "again ransom ....", "I got rid of ideas/",
-                " but going on"};
-
-        String[] texts = new String[]{"to do the dishes", "don't forget to do it!!", "i don't know what to write",
-                "random text",
-                "lets pretend there is some sensedfhsfhfghfghfghfdghfg fghf gh fg h fg hfg hf gh fg\n " +
-                        "sdkfjsdhfsdf\nasdfhsdjfhsidff",
-                "ullalala", "find me sombody to-ou-oo-o-o loooooove",
-                "bohemian rhapsody"};
-
-
-        String[] colors = new String[]{"#baa896", "#e6ccb5", "#eae2d6", "#d5c3aa", "#d6c6b9",
-                "#eae2d6", "#d5c3aa", "#d6c6b9"} ;
-
-        for(int i = 0; i < names.length; i++){
-            notes.add(new Note(i, names[i], texts[i], new ArrayList<>(beacons.subList(i, (i < names.length -2) ?  i+2 : i+1)), colors[i]));
-
-        }
+//
+//        String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
+//                "One more", " and again", "again ransom ....", "I got rid of ideas/",
+//                " but going on"};
+//
+//        String[] texts = new String[]{"to do the dishes", "don't forget to do it!!", "i don't know what to write",
+//                "random text",
+//                "lets pretend there is some sensedfhsfhfghfghfghfdghfg fghf gh fg h fg hfg hf gh fg\n " +
+//                        "sdkfjsdhfsdf\nasdfhsdjfhsidff",
+//                "ullalala", "find me sombody to-ou-oo-o-o loooooove",
+//                "bohemian rhapsody"};
+//
+//
+//        String[] colors = new String[]{"#baa896", "#e6ccb5", "#eae2d6", "#d5c3aa", "#d6c6b9",
+//                "#eae2d6", "#d5c3aa", "#d6c6b9"} ;
+//
+//        for(int i = 0; i < names.length; i++){
+//            notes.add(new Note(i, names[i], texts[i], new ArrayList<>(beacons.subList(i, (i < names.length -2) ?  i+2 : i+1)), colors[i]));
+//
+//        }
 
 
 
@@ -125,9 +122,7 @@ public class DataBaseEmulator implements DataBaseConnector {
         ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(id));
         try {
             response = con.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         if(!response.equals("Success")){

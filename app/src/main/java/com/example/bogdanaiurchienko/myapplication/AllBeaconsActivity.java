@@ -15,10 +15,9 @@ import android.widget.TextView;
 import com.example.bogdanaiurchienko.myapplication.model.Beacon;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
-import com.example.bogdanaiurchienko.myapplication.model.ServerConnection;
+import com.example.bogdanaiurchienko.myapplication.model.Note;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class AllBeaconsActivity extends AppCompatActivity {
     DataBaseConnector db = DataBaseEmulator.getInstance();
@@ -43,6 +42,12 @@ public class AllBeaconsActivity extends AppCompatActivity {
     }
 
     private void showNotesNotifications(String beaconCode){
+        for(Note note : db.getNotes())  {
+            if(note.getBeacons().contains(new Beacon(beaconCode)))  {
+                return;
+            }
+        }
+
         return;
 
     }
