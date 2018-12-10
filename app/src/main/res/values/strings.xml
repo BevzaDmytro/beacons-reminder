@@ -1,15 +1,10 @@
 <resources>
-    <string name="app_name">Precious app</string>
+    <string name="app_name">Trigger Reminders</string>
     <string name="note_name">Note Name</string>
-    <string name="note_text">Put here your note text</string>
-    <string name="title_activity_another_activity">another_activity</string>
     <string name="title_activity_menu">Reminders</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     <string name="set_note_color">Colour</string>
     <string name="set_note_beacons">Beacons</string>
@@ -36,4 +31,30 @@
     <string name="feedback">Feedback</string>
     <string name="edit_note">Note Details</string>
     <string name="all_beacons">All beacons</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <!-- Example settings for Data & Sync -->
+
+    <string name="pref_title_new_message_notifications">Beacon notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="enable_beacon_scanning">Enable beacon scanning</string>
+    <string name="title1">Get all from your bluetooth</string>
+    <string name="keep_it_on_to_get_reminded">Keep it on to get reminded</string>
+    <string name="title2">Get notification bound to the beacons</string>
+    <string name="title22">Never forget anything</string>
+    <string name="desc1">Keeps your data safe</string>
+    <string name="title11">Cloud limitless database</string>
+    <string name="adjust_the_notes_to_your_mood">Adjust the notes to your mood</string>
+    <string name="colorful">Colorful simple design</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.example.bogdanaiurchienko.myapplication.model;
 
 
+import com.example.bogdanaiurchienko.myapplication.R;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -13,7 +15,7 @@ public class Note implements Serializable {
 
 
     Note() {
-        this.color = "#939393";
+        this.color = "#cac7d7";
         this.beacons = new ArrayList<>();
     }
 

@@ -61,7 +61,7 @@ public class ListViewItemCheckboxBaseAdapter extends BaseAdapter {
         {
             convertView = View.inflate(ctx, R.layout.activity_list_view_with_checkbox_item, null);
             CheckBox listItemCheckbox = convertView.findViewById(R.id.list_view_item_checkbox);
-            TextView beaconNameView = convertView.findViewById(R.id.beconName);
+            TextView beaconNameView = convertView.findViewById(R.id.beaconName);
             TextView beaconAddressView = convertView.findViewById(R.id.beaconAddress);
             TextView beaconCodeView = convertView.findViewById(R.id.beaconCode);
 

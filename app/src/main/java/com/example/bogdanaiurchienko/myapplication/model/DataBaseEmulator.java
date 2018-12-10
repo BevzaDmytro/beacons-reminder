@@ -1,19 +1,28 @@
 package com.example.bogdanaiurchienko.myapplication.model;
 
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
+import java.net.NetworkInterface;
+
+import java.util.Collections;
+import java.util.List;
+
+
 public class DataBaseEmulator implements DataBaseConnector {
     private static final DataBaseConnector ourInstance = new DataBaseEmulator();
     private ArrayList<Note> notes = new ArrayList<>();
     private ArrayList<Beacon> beacons = new ArrayList<>();
+    private String mac;
 
     public static DataBaseConnector getInstance() {
         return ourInstance;
     }
+
 
 
     public void updateBeaconsFromServer(){
@@ -30,6 +39,7 @@ public class DataBaseEmulator implements DataBaseConnector {
         TypeToken<ArrayList<Beacon>> token = new TypeToken<ArrayList<Beacon>>() {};
         this.beacons = gson.fromJson(jsonBeacons, token.getType());
     }
+
 
     public void updateNotesFromServer(){
         String jsonNotes = "";
@@ -86,6 +96,8 @@ this.updateBeaconsFromServer();
 //        }
 
 
+
+        this.mac = getMac();
 
     }
 
@@ -151,5 +163,33 @@ this.updateBeaconsFromServer();
         this.beacons = beacons;
     }
 
+
+    static private String getMac() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif: all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b: macBytes) {
+                    //res1.append(Integer.toHexString(b & 0xFF) + ":");
+                    res1.append(String.format("%02X:", b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return "02:00:00:00:00:00";
+    }
 
 }
