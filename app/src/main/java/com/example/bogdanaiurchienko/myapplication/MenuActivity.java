@@ -66,7 +66,7 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        db.updateNotesFromServer();
+//        db.updateNotesFromServer();
 
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
@@ -126,7 +126,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        db.updateNotesFromServer();
+//        db.updateNotesFromServer();
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);

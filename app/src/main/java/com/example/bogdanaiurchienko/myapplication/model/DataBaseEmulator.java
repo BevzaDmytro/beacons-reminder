@@ -44,6 +44,7 @@ public class DataBaseEmulator implements DataBaseConnector {
         Gson gson = new Gson();
         TypeToken<ArrayList<Note>> token = new TypeToken<ArrayList<Note>>() {};
         this.notes = gson.fromJson(jsonNotes, token.getType());
+        System.out.println();
     }
 
     private DataBaseEmulator() {
@@ -59,29 +60,30 @@ public class DataBaseEmulator implements DataBaseConnector {
 //            beacons.add(new Beacon(i, beaconsNames[i], beaconsLocations[i], beaconsCodes[i]));
 //        }
 
+this.updateNotesFromServer();
+this.updateBeaconsFromServer();
 
 
-
-        String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
-                "One more", " and again", "again ransom ....", "I got rid of ideas/",
-                " but going on"};
-
-        String[] texts = new String[]{"to do the dishes", "don't forget to do it!!", "i don't know what to write",
-                "random text",
-                "lets pretend there is some sensedfhsfhfghfghfghfdghfg fghf gh fg h fg hfg hf gh fg\n " +
-                        "\n\n sdkfjsdhfsdf\n\nasdfhsdjfhsidff",
-                "ullalala", "find me sombody to-ou-oo-o-o loooooove",
-                "bohemian rhapsody"};
-
-
-        String[] colors = new String[]{ "#d2d4dc", "#dcedc1",
-                "#ffd3b6", "#ffaaa5", "#ff8b94", "#a8e6cf",
-                "#ffd3b6", "#ff8b94"} ;
-
-        for(int i = 0; i < names.length; i++){
-            notes.add(new Note(i, names[i], texts[i], beacons, colors[i]));
-
-        }
+//        String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
+//                "One more", " and again", "again ransom ....", "I got rid of ideas/",
+//                " but going on"};
+//
+//        String[] texts = new String[]{"to do the dishes", "don't forget to do it!!", "i don't know what to write",
+//                "random text",
+//                "lets pretend there is some sensedfhsfhfghfghfghfdghfg fghf gh fg h fg hfg hf gh fg\n " +
+//                        "\n\n sdkfjsdhfsdf\n\nasdfhsdjfhsidff",
+//                "ullalala", "find me sombody to-ou-oo-o-o loooooove",
+//                "bohemian rhapsody"};
+//
+//
+//        String[] colors = new String[]{ "#d2d4dc", "#dcedc1",
+//                "#ffd3b6", "#ffaaa5", "#ff8b94", "#a8e6cf",
+//                "#ffd3b6", "#ff8b94"} ;
+//
+//        for(int i = 0; i < names.length; i++){
+//            notes.add(new Note(i, names[i], texts[i], beacons, colors[i]));
+//
+//        }
 
 
 
@@ -106,6 +108,7 @@ public class DataBaseEmulator implements DataBaseConnector {
 
     public int getNewNoteId(){
         notes.add(new Note());
+
         return notes.size() - 1;
     }
 

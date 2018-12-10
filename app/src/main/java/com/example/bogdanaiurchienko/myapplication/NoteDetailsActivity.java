@@ -191,6 +191,7 @@ public class NoteDetailsActivity extends AppCompatActivity {
 
     //тут викликаємо актівіті вибору біконів
     public void setBeacons(View v) {
+//        db.updateBeaconsFromServer();
         Intent intent = new Intent(this, ListViewWithCheckboxActivity.class);
         intent.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteId);
         intent.putExtra("com.example.bogdanaiurchienko.myapplication.BG_COLOR", note.getColor());

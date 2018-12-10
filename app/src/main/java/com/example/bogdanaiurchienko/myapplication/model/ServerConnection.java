@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 
 
@@ -16,7 +17,7 @@ import java.net.URL;
 public class ServerConnection  extends AsyncTask<String, Void, String> {
 
     private HttpURLConnection conn;
-    private String hostName = "http://192.168.0.102/test.php";
+    private String hostName = "http://192.168.0.102/beacons-server/api/";
 
     public ServerConnection(){
 
@@ -32,19 +33,20 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
         String adress = this.hostName;
         StringBuilder sb = new StringBuilder();
-
+        String method = "GET";
         if(strings[0].equals("get")){
+
             switch (strings[1]){
                 case "beacons":
-                    adress =this.hostName+"?action=select&id=beacons";
+                    adress =this.hostName+"beacons";
                     break;
 
                 case "notes":
-                    adress =this.hostName+"?action=select&id=notes";
+                    adress =this.hostName+"notes";
                     break;
 
                 default:
-                    adress =this.hostName+"?action=select&id="+strings[1];
+                    adress =this.hostName+"note/"+strings[1];
                     break;
             }
         }
@@ -62,7 +64,7 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             this.conn = (HttpURLConnection) new URL(adress).openConnection();
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
-            conn.setRequestMethod("POST");
+            conn.setRequestMethod(method);
 //            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
             conn.setDoInput(true);
             conn.connect();
