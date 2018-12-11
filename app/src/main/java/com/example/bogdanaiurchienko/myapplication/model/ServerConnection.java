@@ -17,7 +17,8 @@ import java.net.URL;
 public class ServerConnection  extends AsyncTask<String, Void, String> {
 
     private HttpURLConnection conn;
-    private String hostName = "http://192.168.0.102/beacons-server/api/";
+//    private String hostName = "http://192.168.0.102/beacons-server/api/";
+    private String hostName = "http://10.241.128.107/beacons-server/api/";
 
     public ServerConnection(){
 

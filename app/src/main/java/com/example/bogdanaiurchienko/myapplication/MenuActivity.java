@@ -57,7 +57,7 @@ public class MenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
+//        System.out.println("NOOOOOO");
         createNotificationChannel();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
