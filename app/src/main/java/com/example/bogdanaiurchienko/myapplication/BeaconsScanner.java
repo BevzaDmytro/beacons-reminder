@@ -1,10 +1,12 @@
 package com.example.bogdanaiurchienko.myapplication;
 
+import android.Manifest;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.RemoteException;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import org.altbeacon.beacon.Beacon;
@@ -22,6 +24,7 @@ import java.util.Collection;
 
 public class BeaconsScanner extends Application implements BeaconConsumer, BootstrapNotifier  {
     private static final String TAG = ".BeaconsScanner";
+    private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 0;
     private RegionBootstrap regionBootstrap;
     private BeaconManager beaconManager;
 
@@ -30,6 +33,7 @@ public class BeaconsScanner extends Application implements BeaconConsumer, Boots
         super.onCreate();
 //        Log.d(TAG, "App started up");
         System.out.println("YESSS");
+
          beaconManager = BeaconManager.getInstanceForApplication(this);
         // To detect proprietary beacons, you must add a line like below corresponding to your beacon
         // type.  Do a web search for "setBeaconLayout" to get the proper expression.

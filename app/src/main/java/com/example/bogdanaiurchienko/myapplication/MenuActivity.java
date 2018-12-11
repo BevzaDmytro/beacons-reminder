@@ -1,5 +1,6 @@
 package com.example.bogdanaiurchienko.myapplication;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -47,6 +49,7 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 0 ;
     final DataBaseConnector db = DataBaseEmulator.getInstance();
     ListView notesView;
     NoteItemAdapter noteItemAdapter;
@@ -59,6 +62,11 @@ public class MenuActivity extends AppCompatActivity
         setContentView(R.layout.activity_menu);
 //        System.out.println("NOOOOOO");
         createNotificationChannel();
+        ActivityCompat.requestPermissions(
+                this,
+                new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
+                PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION
+        );
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
