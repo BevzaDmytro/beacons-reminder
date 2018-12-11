@@ -184,7 +184,9 @@ public class MenuActivity extends AppCompatActivity
             startActivity(settingsActivity);
 
         } else if (id == R.id.help) {
-            Intent i = new Intent(MenuActivity.this, IntroActivity.class);
+//            Intent i = new Intent(MenuActivity.this, IntroActivity.class);
+//            startActivity(i);
+            Intent i = new Intent(MenuActivity.this, BeaconActivity.class);
             startActivity(i);
 
         } else if (id == R.id.feedback) {
