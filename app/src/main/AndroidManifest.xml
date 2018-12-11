@@ -3,48 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.bogdanaiurchienko.myapplication">
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-<application
-    android:allowBackup="true"
-    android:icon="@mipmap/icon"
-    android:label="@string/app_name"
-    android:roundIcon="@mipmap/ic_launcher_round"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme"
-    tools:ignore="GoogleAppIndexingWarning">
-    <activity
-        android:name=".NoteDetailsActivity"
-        android:label="@string/edit_note"
-        android:parentActivityName=".MenuActivity" />
-    <activity
-        android:name=".MenuActivity"
-        android:label="@string/title_activity_menu"
-        android:theme="@style/AppTheme.NoActionBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".select.beacons.ListViewWithCheckboxActivity"
-        android:label="@string/all_beacons"
-        android:parentActivityName=".NoteDetailsActivity" />
-    <activity
-        android:name=".AllBeaconsActivity"
-        android:label="@string/all_beacons"
-        android:parentActivityName=".MenuActivity" />
-    <activity
-        android:name=".SettingsActivity"
-        android:label="@string/title_activity_settings"
-        android:parentActivityName=".MenuActivity" />
-    <activity
-        android:name=".IntroActivity"
-        android:label="Trigger Reminders"
-        android:theme="@style/AppTheme.NoActionBar"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".NoteDetailsActivity"
+            android:label="@string/edit_note"
+            android:parentActivityName=".MenuActivity" />
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-</application>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".select.beacons.ListViewWithCheckboxActivity"
+            android:label="@string/all_beacons"
+            android:parentActivityName=".NoteDetailsActivity" />
+        <activity
+            android:name=".AllBeaconsActivity"
+            android:label="@string/all_beacons"
+            android:parentActivityName=".MenuActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MenuActivity" />
+        <activity
+            android:name=".IntroActivity"
+            android:label="Trigger Reminders"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".BeaconActivity" />
+    </application>
+
 </manifest>
