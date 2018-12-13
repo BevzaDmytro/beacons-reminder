@@ -23,11 +23,14 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 public class BeaconScanner extends Service implements BeaconConsumer {
     protected static final String TAG = "MonitoringActivity";
     private BeaconManager beaconManager;
     private Region region;
+    final Set<Beacon> rangedBeacons = new HashSet<>();
 
     public BeaconScanner() {
         region = new Region("myMonitoringUniqueId", null, null, null);
@@ -43,76 +46,63 @@ public class BeaconScanner extends Service implements BeaconConsumer {
     @Override
     public void onCreate() {
         super.onCreate();
-            beaconManager = BeaconManager.getInstanceForApplication(this);
-            // To detect proprietary beacons, you must add a line like below corresponding to your beacon
-            // type.  Do a web search for "setBeaconLayout" to get the proper expression.
-            // beaconManager.getBeaconParsers().add(new BeaconParser().
-            //        setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
-            beaconManager.getBeaconParsers().add(new BeaconParser().
-                    setBeaconLayout(" m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
-            beaconManager.bind(this);
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         beaconManager = BeaconManager.getInstanceForApplication(this);
-        // To detect proprietary beacons, you must add a line like below corresponding to your beacon
-        // type.  Do a web search for "setBeaconLayout" to get the proper expression.
-        // beaconManager.getBeaconParsers().add(new BeaconParser().
-        //        setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
         beaconManager.getBeaconParsers().add(new BeaconParser().
-                setBeaconLayout(" m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+                setBeaconLayout("m:2-3=beac,i:4-19,i:20-21,i:22-23,p:24-24,d:25-25"));
+        beaconManager.getBeaconParsers().add(new BeaconParser().
+                setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
+        beaconManager.setBackgroundScanPeriod(1100L);
+        beaconManager.setBackgroundBetweenScanPeriod(30000L);
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onBeaconServiceConnect() {
         Log.i(TAG,"onBeaconServiceConnect     :  ");
-
+        beaconManager.addRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
+                for(org.altbeacon.beacon.Beacon oneBeacon : collection) {
+                    if(!rangedBeacons.contains(oneBeacon)) {
+                        Log.i(TAG, "oneBeacon.getId1().toUuid().toString():  " + oneBeacon.getId1().toUuid().toString());
+                        showNotesNotifications(oneBeacon.getId1().toUuid().toString());
+                        rangedBeacons.add(oneBeacon);
+                    }
+                }
+            }
+        });
+        
         beaconManager.addMonitorNotifier(new MonitorNotifier() {
             @Override
             public void didEnterRegion(Region region) {
-                Log.i(TAG, "I just saw an beacon for the first time!");
-                try {
-                    beaconManager.startRangingBeaconsInRegion(region);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                Log.i(TAG,"didEnterRegion     :  ");
 
             }
 
             @Override
             public void didExitRegion(Region region) {
-                Log.i(TAG,"I no longer see a beacon");
-                try {
-                    beaconManager.stopRangingBeaconsInRegion(region);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+                Log.i(TAG,"didExitRegion     :  ");
+
+                rangedBeacons.clear();
             }
 
             @Override
-            public void didDetermineStateForRegion(int state, Region region) {
-                Log.i(TAG,"I have just switched from seeing/not seeing beacons: " + state);
+            public void didDetermineStateForRegion(int i, Region region) {
+                Log.i(TAG,"didDetermineStateForRegion     :  ");
 
-            }
-        });
 
-        beaconManager.setRangeNotifier(new RangeNotifier() {
-            @Override
-            public void didRangeBeaconsInRegion(Collection<Beacon> collection, Region region) {
-                for(org.altbeacon.beacon.Beacon oneBeacon : collection) {
-                    Log.i(TAG,"distance: " + oneBeacon.getDistance() + " id:" + oneBeacon.getId1() + "/" + oneBeacon.getId2() + "/" + oneBeacon.getId3());
-                    Log.i(TAG,"oneBeacon.getId1().toUuid().toString():  " + oneBeacon.getId1().toUuid().toString());
-                    showNotesNotifications(oneBeacon.getId1().toUuid().toString());
-                }
             }
         });
 
         try {
             beaconManager.startMonitoringBeaconsInRegion(region);
+            beaconManager.startRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -123,9 +113,9 @@ public class BeaconScanner extends Service implements BeaconConsumer {
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG,"onDestroy     :  ");
-
         try {
             beaconManager.stopMonitoringBeaconsInRegion(region);
+            beaconManager.stopRangingBeaconsInRegion(region);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
