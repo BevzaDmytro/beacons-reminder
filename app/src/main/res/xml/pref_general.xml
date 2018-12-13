@@ -3,6 +3,7 @@
     <!-- A 'parent' preference, which enables/disables child preferences (below)
          when checked/unchecked. -->
     <SwitchPreference
+        android:id="@+id/beacon_scanning"
         android:defaultValue="true"
         android:key="beacon_scanning"
         android:title="@string/enable_beacon_scanning" />

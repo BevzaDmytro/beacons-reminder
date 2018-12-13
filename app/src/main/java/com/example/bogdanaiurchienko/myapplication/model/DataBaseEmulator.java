@@ -16,11 +16,11 @@ public class DataBaseEmulator implements DataBaseConnector {
     }
 
     private DataBaseEmulator() {
-        String[] beaconsNames = new String[]{"kitchen", "outdoor", "the shop", "the school",
+        String[] beaconsNames = new String[]{"kitchen", "Andriy'sBeacon", "the shop", "the school",
                 "in parents' home", "bathroom", "bedroom", "new beacon"};
         String[] beaconsLocations = new String[]{"Poltava, Ukraine", "USA, Boston",
                 "Poltava, Ukraine", "USA, Boston", "Poltava, Ukraine", "USA, Boston", "Kiev, Ukraine",  "Kiev, Ukraine"};
-        String[] beaconsCodes = new String[]{"sdkjfsjf;skdjfs;df", "dfkjhlifhuasdfasdfas", "sldfhaiuefwe",
+        String[] beaconsCodes = new String[]{"1260a1f0-c1c3-466c-8cd9-88c2881b6225", "28fb2f6b-f574-40c1-afd3-34832145537d", "sldfhaiuefwe",
                 "sdlfjaw;iofh;woef", "sljfa;oifhowi","sldfjhaiudf;f",
                 "ldskjf;isodh;fosduf", "dfkja;dsoifja;odijf"};
 
