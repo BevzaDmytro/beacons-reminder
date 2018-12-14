@@ -217,6 +217,11 @@ public class MenuActivity extends AppCompatActivity
             Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
             showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", db.getNewNoteId());
             startActivity(showNoteDetail);
+
+        } else if (id == R.id.add_beacon) {
+            Intent addBeacons = new Intent(getApplicationContext(), AddBeaconActivity.class);
+            startActivity(addBeacons);
+
         } else if (id == R.id.all_beacons) {
             Intent showAllBeacons = new Intent(getApplicationContext(), AllBeaconsActivity.class);
             startActivity(showAllBeacons);

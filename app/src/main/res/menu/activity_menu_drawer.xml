@@ -9,6 +9,10 @@
             android:icon="@drawable/ic_add"
             android:title="@string/create_new_note" />
         <item
+            android:id="@+id/add_beacon"
+            android:icon="@drawable/ic_add_circle_outline_black_24dp"
+            android:title="@string/add_new_beacon" />
+        <item
             android:id="@+id/all_beacons"
             android:icon="@drawable/ic_location_searching_black_24dp"
             android:title="@string/view_all_beacons" />

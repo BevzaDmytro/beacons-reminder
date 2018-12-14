@@ -58,8 +58,8 @@ public class BeaconScanner extends Service implements BeaconConsumer {
         beaconManager.getBeaconParsers().add(new BeaconParser().
                 setBeaconLayout("m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24"));
         beaconManager.bind(this);
-        beaconManager.setBackgroundScanPeriod(1100L);
-        beaconManager.setBackgroundBetweenScanPeriod(30000L);
+//        beaconManager.setBackgroundScanPeriod(1100L);
+//        beaconManager.setBackgroundBetweenScanPeriod(30000L);
         return super.onStartCommand(intent, flags, startId);
     }
 

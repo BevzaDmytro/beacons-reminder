@@ -213,4 +213,9 @@ this.updateBeaconsFromServer();
         return "02:00:00:00:00:00";
     }
 
+    public void addBeacon(String name, String address, String code){
+        System.out.println(" From emulator "  + name+ "     " + address + "   " + code);
+        Beacon beacon = new Beacon(name, address, code);
+        
+    }
 }

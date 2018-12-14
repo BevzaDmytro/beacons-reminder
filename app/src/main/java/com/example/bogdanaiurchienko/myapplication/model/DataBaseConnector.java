@@ -27,4 +27,5 @@ public interface DataBaseConnector {
 
     ArrayList<Note> getNotesToBeacon(String beaconCode);
 
+    void addBeacon(String name, String address, String code);
 }

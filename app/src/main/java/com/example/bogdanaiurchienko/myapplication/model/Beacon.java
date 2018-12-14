@@ -9,8 +9,7 @@ public class Beacon {
     private String code;
 
 
-    Beacon(long id, String name, String address, String code) {
-        this.id = id;
+    Beacon(String name, String address, String code) {
         this.name = name;
         this.address = address;
         this.code = code;
