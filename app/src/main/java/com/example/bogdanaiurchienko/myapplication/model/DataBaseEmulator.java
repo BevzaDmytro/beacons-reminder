@@ -135,11 +135,10 @@ this.updateBeaconsFromServer();
     }
 
     public int getNewNoteId(){
-        ServerConnection con = (ServerConnection) new ServerConnection().execute("insert", "note");
+       new ServerConnection().execute("insert", "note");
 
-        notes.add(new Note());
-
-        return notes.size() - 1;
+       int lastNoteID = this.notes.get(this.notes.size()-1).getId();
+        return lastNoteID;
     }
 
     public void editNote(int id, String name, String text, String color, ArrayList<String> beaconsCodes) {
