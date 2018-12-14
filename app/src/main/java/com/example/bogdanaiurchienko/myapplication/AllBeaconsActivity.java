@@ -38,7 +38,7 @@ public class AllBeaconsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_beacond_activity);
 
-//        db.updateBeaconsFromServer();
+        db.updateBeaconsFromServer();
 
         //відображаємо список усіх біконів
         ListView allBeaconsView =  findViewById(R.id.all_beacons_list) ;

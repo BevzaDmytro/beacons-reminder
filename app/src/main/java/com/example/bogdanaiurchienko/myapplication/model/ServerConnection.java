@@ -22,7 +22,7 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
 //    private String hostName = "http://10.241.128.245/beacons-server/api/";
     private String hostName = "http://172.16.0.15/beacons-server/api/";
 
-    public ServerConnection(){
+    ServerConnection(){
 
     }
 
@@ -58,8 +58,14 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             }
         }
        else if(strings[0].equals("insert")){
-            adress =this.hostName+"note";
-            method = "POST";
+            if(strings[1].equals("beacon")){
+                adress = this.hostName + "beaconAdd/"+strings[2];
+                method = "GET";
+            }  else {
+                adress = this.hostName + "note";
+                method = "POST";
+            }
+
         }
         else if(strings[0].equals("delete")){
             adress =this.hostName+"note/"+strings[1];
@@ -77,6 +83,7 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             conn.setRequestMethod(method);
 //            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
             conn.setDoInput(true);
+           // conn.setDoOutput(true);
             conn.connect();
             if(method.equals("POST") && strings[0].equals("update")) {
                 byte[] postData       = strings[1].getBytes( StandardCharsets.UTF_8 );
@@ -88,7 +95,7 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(
                     new InputStreamReader(is, "UTF-8"));
-            String bfr_st = null;
+            String bfr_st;
             while ((bfr_st = br.readLine()) != null) {
                 sb.append(bfr_st);
             }

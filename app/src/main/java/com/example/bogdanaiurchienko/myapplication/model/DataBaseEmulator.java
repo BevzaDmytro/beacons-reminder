@@ -215,7 +215,7 @@ this.updateBeaconsFromServer();
 
     public void addBeacon(String name, String address, String code){
         System.out.println(" From emulator "  + name+ "     " + address + "   " + code);
-        Beacon beacon = new Beacon(name, address, code);
+        new ServerConnection().execute("insert", "beacon","?name="+name+"&address="+address+"&code="+code);
         
     }
 }
