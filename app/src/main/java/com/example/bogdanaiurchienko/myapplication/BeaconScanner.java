@@ -129,8 +129,10 @@ public class BeaconScanner extends Service implements BeaconConsumer {
         boolean notificationsVibrate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_vibrate", false);
         boolean notificationsSilent = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_silent", false);
 
-        for (Note note : DataBaseEmulator.getInstance().getNotes()) {
-            if (note.getBeacons().contains(new com.example.bogdanaiurchienko.myapplication.model.Beacon(beaconCode)) && notificationsOn) {
+//        for (Note note : DataBaseEmulator.getInstance().getNotes()) {
+        for (Note note : DataBaseEmulator.getInstance().getNotesToBeacon(beaconCode)) {
+//            if (note.getBeacons().contains(new com.example.bogdanaiurchienko.myapplication.model.Beacon(beaconCode)) && notificationsOn) {
+            if (notificationsOn) {
                 Intent backIntent = new Intent(this, MenuActivity.class);
                 backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 

@@ -43,6 +43,10 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
                     adress =this.hostName+"beacons";
                     break;
 
+                case "beacon":
+                    adress = this.hostName +"beacon/"+strings[2];
+                    break;
+
                 case "notes":
                     adress =this.hostName+"notes";
                     break;

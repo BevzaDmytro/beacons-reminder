@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.bogdanaiurchienko.myapplication.model.Beacon;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 import com.example.bogdanaiurchienko.myapplication.model.Note;
@@ -108,7 +109,13 @@ public class NoteDetailsActivity extends AppCompatActivity {
         note.setName(noteNameView.getText().toString());
         note.setText(noteTextView.getText().toString());
 
-        db.addNote(note);
+//        db.addNote(note);
+        ArrayList<String> beacons = new ArrayList<>();
+        for (Beacon beacon:note.getBeacons()   ) {
+            beacons.add(beacon.getCode());
+        }
+
+        db.editNote(note.getId(),note.getName(),note.getText(),note.getColor(),beacons);
     }
 
     //тут викликаємо діалог вибору кольору

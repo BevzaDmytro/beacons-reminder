@@ -112,6 +112,21 @@ this.updateBeaconsFromServer();
     }
 
 
+    public ArrayList<Note> getNotesToBeacon(String beaconCode){
+        String jsonNotes = "";
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "beacon", beaconCode);
+        try {
+            jsonNotes = con.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        TypeToken<ArrayList<Note>> token = new TypeToken<ArrayList<Note>>() {};
+        return  gson.fromJson(jsonNotes, token.getType());
+    }
+
     public void addNote(Note note) {
 
     }
@@ -124,10 +139,10 @@ this.updateBeaconsFromServer();
         return notes.size() - 1;
     }
 
-    public void editNote(int id, String name, String text, String color, String[] beaconsCodes) {
+    public void editNote(int id, String name, String text, String color, ArrayList<String> beaconsCodes) {
 
-        int noteId = this.notes.get(id).getId();
-        String jsonResult = "note={id:"+String.valueOf(noteId)+",name:"+name+",text="+text+",color:"+color
+//        int noteId = this.notes.get(id).getId();
+        String jsonResult = "note={id:"+String.valueOf(id)+",name:"+name+",text="+text+",color:"+color
                 +"}&beacons={";
         int i =0;
         for(String code: beaconsCodes){
@@ -138,16 +153,16 @@ this.updateBeaconsFromServer();
         jsonResult +="}";
         ServerConnection con = (ServerConnection) new ServerConnection().execute("update", jsonResult);
 
-        Note note = notes.get(id);
-//        note.setId(id);
-        note.setName(name);
-        note.setText(text);
-        ArrayList<Beacon> b = new ArrayList<>();
-        for(String code: beaconsCodes){
-            b.add(beacons.get(beacons.indexOf(new Beacon(code))));
-        }
-        note.setBeacons(b);
-        note.setColor(color);
+//        Note note = notes.get(id);
+////        note.setId(id);
+//        note.setName(name);
+//        note.setText(text);
+//        ArrayList<Beacon> b = new ArrayList<>();
+//        for(String code: beaconsCodes){
+//            b.add(beacons.get(beacons.indexOf(new Beacon(code))));
+//        }
+//        note.setBeacons(b);
+//        note.setColor(color);
     }
 
     public void deleteNote(int id){
