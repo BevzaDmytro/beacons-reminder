@@ -107,8 +107,11 @@ this.updateBeaconsFromServer();
     public Note getNote(int i){
         //dv ?
         this.updateNotesFromServer();
-        if(i < notes.size()) return notes.get(i);
-        else return null;
+        for ( Note note : this.notes) {
+            if(note.getId() == i) return note;
+        }
+//        if(i < notes.size()) return notes.get(i);
+         return null;
     }
 
 
