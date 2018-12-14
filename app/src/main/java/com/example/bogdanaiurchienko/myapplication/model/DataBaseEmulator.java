@@ -73,7 +73,6 @@ public class DataBaseEmulator implements DataBaseConnector {
 this.updateNotesFromServer();
 this.updateBeaconsFromServer();
 
-
 //        String[] names = new String[]{"Dishes!!!", "Trash!!!", "some other note",
 //                "One more", " and again", "again ransom ....", "I got rid of ideas/",
 //                " but going on"};
@@ -94,8 +93,6 @@ this.updateBeaconsFromServer();
 //            notes.add(new Note(i, names[i], texts[i], beacons, colors[i]));
 //
 //        }
-
-
 
         this.mac = getMac();
 
@@ -119,14 +116,29 @@ this.updateBeaconsFromServer();
     }
 
     public int getNewNoteId(){
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("insert", "note");
+
         notes.add(new Note());
 
         return notes.size() - 1;
     }
 
     public void editNote(int id, String name, String text, String color, String[] beaconsCodes) {
+
+        int noteId = this.notes.get(id).getId();
+        String jsonResult = "note={id:"+String.valueOf(noteId)+",name:"+name+",text="+text+",color:"+color
+                +"}&beacons={";
+        int i =0;
+        for(String code: beaconsCodes){
+            jsonResult += String.valueOf(i)+":"+code+",";
+            i++;
+        }
+        jsonResult = jsonResult.substring(0, jsonResult.length() - 1);
+        jsonResult +="}";
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("update", jsonResult);
+
         Note note = notes.get(id);
-        note.setId(id);
+//        note.setId(id);
         note.setName(name);
         note.setText(text);
         ArrayList<Beacon> b = new ArrayList<>();
@@ -138,8 +150,9 @@ this.updateBeaconsFromServer();
     }
 
     public void deleteNote(int id){
+        int idNote = this.notes.get(id).getId();
         String response = "";
-        ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(id));
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(idNote));
         try {
             response = con.get();
         } catch (ExecutionException e) {
@@ -152,6 +165,7 @@ this.updateBeaconsFromServer();
         }
 
         notes.remove(id);
+//        this.updateNotesFromServer();
     }
 
 

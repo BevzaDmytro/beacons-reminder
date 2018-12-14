@@ -4,6 +4,7 @@ package com.example.bogdanaiurchienko.myapplication.model;
 import android.os.AsyncTask;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,14 +12,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
+import java.nio.charset.StandardCharsets;
 
 
 public class ServerConnection  extends AsyncTask<String, Void, String> {
 
     private HttpURLConnection conn;
-//    private String hostName = "http://192.168.0.102/beacons-server/api/";
-    private String hostName = "http://10.241.128.107/beacons-server/api/";
+    private String hostName = "http://192.168.0.103/beacons-server/api/";
+//    private String hostName = "http://10.241.128.107/beacons-server/api/";
 
     public ServerConnection(){
 
@@ -52,13 +53,16 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             }
         }
        else if(strings[0].equals("insert")){
-            adress =this.hostName+"?action=insert&id="+strings[1];
+            adress =this.hostName+"note";
+            method = "POST";
         }
         else if(strings[0].equals("delete")){
-            adress =this.hostName+"?action=delete&id="+strings[1];
+            adress =this.hostName+"note/"+strings[1];
+            method = "DELETE";
         }
         else if(strings[0].equals("update")){
-            adress =this.hostName+"?action=update&id="+strings[1];
+            adress =this.hostName+"edit";
+            method = "POST";
         }
 
         try {
@@ -69,6 +73,12 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
 //            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
             conn.setDoInput(true);
             conn.connect();
+            if(method.equals("POST") && strings[0].equals("update")) {
+                byte[] postData       = strings[1].getBytes( StandardCharsets.UTF_8 );
+                try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
+                    wr.write(postData);
+                }
+            }
 
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(

@@ -210,7 +210,7 @@ public class MenuActivity extends AppCompatActivity
         TextView userNameView = ((NavigationView)findViewById(R.id.nav_view)).getHeaderView(0).findViewById(R.id.user_name_view);
         userNameView.setText(PreferenceManager.getDefaultSharedPreferences(this).getString("user_name", "User"));
 
-
+        db.updateNotesFromServer();
         notesView = findViewById(R.id.notesView) ;
         noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
         notesView.setAdapter(noteItemAdapter);
