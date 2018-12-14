@@ -60,7 +60,12 @@
             android:label="Trigger Reminders"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".BeaconActivity" />
+
+        <service
+            android:name=".BeaconScanner"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="" />
 
     </application>
 

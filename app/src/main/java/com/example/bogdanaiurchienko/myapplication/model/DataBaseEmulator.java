@@ -25,6 +25,7 @@ public class DataBaseEmulator implements DataBaseConnector {
 
 
 
+
     public void updateBeaconsFromServer(){
         String jsonBeacons = "";
         ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "beacons");

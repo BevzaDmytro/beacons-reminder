@@ -2,31 +2,36 @@ package com.example.bogdanaiurchienko.myapplication;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+
 import android.support.v4.app.ActivityCompat;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
@@ -38,10 +43,7 @@ import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
 
 import com.example.bogdanaiurchienko.myapplication.model.Note;
 
-import java.net.NetworkInterface;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 
@@ -49,8 +51,13 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
+
     private static final int PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 0 ;
+
+    private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
+
     final DataBaseConnector db = DataBaseEmulator.getInstance();
+    protected static final String TAG = "MonitoringActivity";
     ListView notesView;
     NoteItemAdapter noteItemAdapter;
     int lastNote;
@@ -112,7 +119,38 @@ public class MenuActivity extends AppCompatActivity
                 startActivity(showNoteDetail);
             }
         });
-    }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check 
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("This app needs location access");
+                builder.setMessage("Please grant location access so this app can detect beacons.");
+                builder.setPositiveButton(android.R.string.ok, null);
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                    public void onDismiss(DialogInterface dialog) {
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
+                    }
+                });
+                builder.show();
+            }
+        }
+
+
+        if(preferences.getBoolean("beacon_scanning", false)){
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    startService(new Intent(MenuActivity.this,BeaconScanner.class));
+                }
+            };
+            thread.start();
+//            Intent startServiceIntent = new Intent(MenuActivity.this, BeaconScanner.class);
+//            startService(startServiceIntent);
+        }
+
+        }
 
 
 
@@ -184,10 +222,10 @@ public class MenuActivity extends AppCompatActivity
             startActivity(settingsActivity);
 
         } else if (id == R.id.help) {
-//            Intent i = new Intent(MenuActivity.this, IntroActivity.class);
-//            startActivity(i);
-            Intent i = new Intent(MenuActivity.this, BeaconActivity.class);
+            Intent i = new Intent(MenuActivity.this, IntroActivity.class);
             startActivity(i);
+//            Intent i = new Intent(MenuActivity.this, BeaconActivity.class);
+//            startActivity(i);
 
         } else if (id == R.id.feedback) {
             String OUR_MAIL_ADDRESS = "veggimail6@gmail.com";
@@ -284,4 +322,31 @@ public class MenuActivity extends AppCompatActivity
             notificationManager.createNotificationChannel(channel);
         }
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_COARSE_LOCATION: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.i(TAG,"coarse location permission granted");
+                } else {
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setTitle("Functionality limited");
+                    builder.setMessage("Since location access has not been granted, this app will not be able to discover beacons when in the background.");
+                    builder.setPositiveButton(android.R.string.ok, null);
+                    builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+                        @Override
+                        public void onDismiss(DialogInterface dialog) {
+                        }
+
+                    });
+                    builder.show();
+                }
+            }
+        }
+    }
+
 }
