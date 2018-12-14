@@ -23,9 +23,6 @@ public class DataBaseEmulator implements DataBaseConnector {
         return ourInstance;
     }
 
-
-
-
     public void updateBeaconsFromServer(){
         String jsonBeacons = "";
         ServerConnection con = (ServerConnection) new ServerConnection().execute("get", "beacons");
@@ -40,7 +37,6 @@ public class DataBaseEmulator implements DataBaseConnector {
         TypeToken<ArrayList<Beacon>> token = new TypeToken<ArrayList<Beacon>>() {};
         this.beacons = gson.fromJson(jsonBeacons, token.getType());
     }
-
 
     public void updateNotesFromServer(){
         String jsonNotes = "";
@@ -99,7 +95,6 @@ this.updateBeaconsFromServer();
 
     }
 
-
     public ArrayList<Note> getNotes() {
         return notes;
     }
@@ -113,7 +108,6 @@ this.updateBeaconsFromServer();
 //        if(i < notes.size()) return notes.get(i);
          return null;
     }
-
 
     public ArrayList<Note> getNotesToBeacon(String beaconCode){
         String jsonNotes = "";
@@ -183,7 +177,6 @@ this.updateBeaconsFromServer();
 //        this.updateNotesFromServer();
     }
 
-
     public ArrayList<Beacon> getBeacons() {
         return beacons;
     }
@@ -191,7 +184,6 @@ this.updateBeaconsFromServer();
     public void setBeacons(ArrayList<Beacon> beacons) {
         this.beacons = beacons;
     }
-
 
     static private String getMac() {
         try {
