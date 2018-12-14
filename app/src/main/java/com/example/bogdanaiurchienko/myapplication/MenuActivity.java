@@ -115,7 +115,7 @@ public class MenuActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
                 lastNote = i;
-                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteItemAdapter.getCount() -1 - i);
+                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteItemAdapter.getNotes().get(noteItemAdapter.getCount() - i - 1).getId()); //db.getNotes().get(i).getId());
                 startActivity(showNoteDetail);
             }
         });
@@ -287,6 +287,10 @@ public class MenuActivity extends AppCompatActivity
         @Override
         public long getItemId(int i) {
             return notes.get(i).getId();
+        }
+
+        public ArrayList<Note> getNotes() {
+            return notes;
         }
 
         @SuppressLint({"ViewHolder", "InflateParams"})

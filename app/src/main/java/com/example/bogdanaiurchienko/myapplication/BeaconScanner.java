@@ -22,6 +22,7 @@ import org.altbeacon.beacon.MonitorNotifier;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -130,32 +131,35 @@ public class BeaconScanner extends Service implements BeaconConsumer {
         boolean notificationsSilent = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("notifications_silent", false);
 
 //        for (Note note : DataBaseEmulator.getInstance().getNotes()) {
-        for (Note note : DataBaseEmulator.getInstance().getNotesToBeacon(beaconCode)) {
-//            if (note.getBeacons().contains(new com.example.bogdanaiurchienko.myapplication.model.Beacon(beaconCode)) && notificationsOn) {
-            if (notificationsOn) {
-                Intent backIntent = new Intent(this, MenuActivity.class);
-                backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        ArrayList<Note> notes  = DataBaseEmulator.getInstance().getNotesToBeacon(beaconCode);
+        if (notes != null && !notes.isEmpty()) {
+            for (Note note : notes) {
+    //            if (note.getBeacons().contains(new com.example.bogdanaiurchienko.myapplication.model.Beacon(beaconCode)) && notificationsOn) {
+                if (notificationsOn) {
+                    Intent backIntent = new Intent(this, MenuActivity.class);
+                    backIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-                Intent intent = new Intent(this, NoteDetailsActivity.class);
-                intent.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", note.getId());
-                final PendingIntent pendingIntent = PendingIntent.getActivities(this, note.getId()*17,
-                        new Intent[] {backIntent, intent}, PendingIntent.FLAG_ONE_SHOT);
-                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "CHANNEL_ID")
-                        .setSmallIcon(R.drawable.ic_notifications_none_black_24dp)
-                        .setContentTitle(note.getName())
-                        .setContentText(note.getText())
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-                        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
-                if(notificationsVibrate){
-                    mBuilder.setVibrate(new long[] { 1000, 1000});
+                    Intent intent = new Intent(this, NoteDetailsActivity.class);
+                    intent.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", note.getId());
+                    final PendingIntent pendingIntent = PendingIntent.getActivities(this, note.getId()*17,
+                            new Intent[] {backIntent, intent}, PendingIntent.FLAG_ONE_SHOT);
+                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "CHANNEL_ID")
+                            .setSmallIcon(R.drawable.ic_notifications_none_black_24dp)
+                            .setContentTitle(note.getName())
+                            .setContentText(note.getText())
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                            .setContentIntent(pendingIntent)
+                            .setAutoCancel(true)
+                            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+                    if(notificationsVibrate){
+                        mBuilder.setVibrate(new long[] { 1000, 1000});
+                    }
+                    if(!notificationsSilent){
+                        mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    }
+                    NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+                    notificationManager.notify(note.getId()*17, mBuilder.build());
                 }
-                if(!notificationsSilent){
-                    mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-                }
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-                notificationManager.notify(note.getId()*17, mBuilder.build());
             }
         }
     }
