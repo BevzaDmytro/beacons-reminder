@@ -169,21 +169,18 @@ this.updateBeaconsFromServer();
     }
 
     public void deleteNote(int id){
-        int idNote = this.notes.get(id).getId();
         String response = "";
-        ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(idNote));
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("delete", String.valueOf(id));
         try {
             response = con.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
         if(!response.equals("Success")){
             return;
         }
 
-        notes.remove(id);
+        notes.remove(new Note(id));
 //        this.updateNotesFromServer();
     }
 

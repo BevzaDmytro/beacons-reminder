@@ -108,17 +108,21 @@ public class MenuActivity extends AppCompatActivity
         //відображаємо список усіх нотаток, вішаємо на них екшен - відкрити актівіті нотатки
 
         notesView = findViewById(R.id.notesView) ;
-        noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
-        notesView.setAdapter(noteItemAdapter);
-        notesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
-                lastNote = i;
-                showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteItemAdapter.getNotes().get(noteItemAdapter.getCount() - i - 1).getId()); //db.getNotes().get(i).getId());
-                startActivity(showNoteDetail);
-            }
-        });
+        ArrayList<Note> notes =  db.getNotes();
+        if(notes != null && !notes.isEmpty())  {
+            noteItemAdapter = new NoteItemAdapter(this, db.getNotes());
+            notesView.setAdapter(noteItemAdapter);
+            notesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent showNoteDetail = new Intent(getApplicationContext(), NoteDetailsActivity.class);
+                    lastNote = i;
+                    showNoteDetail.putExtra("com.example.bogdanaiurchienko.myapplication.NOTE_ID", noteItemAdapter.getNotes().get(noteItemAdapter.getCount() - i - 1).getId()); //db.getNotes().get(i).getId());
+                    startActivity(showNoteDetail);
+                }
+            });
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check 

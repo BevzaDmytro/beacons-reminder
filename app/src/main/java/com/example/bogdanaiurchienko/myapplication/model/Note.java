@@ -5,6 +5,7 @@ import com.example.bogdanaiurchienko.myapplication.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Note implements Serializable {
     private int id;
@@ -17,6 +18,10 @@ public class Note implements Serializable {
     Note() {
         this.color = "#cac7d7";
         this.beacons = new ArrayList<>();
+    }
+
+    public Note(int id) {
+        this.id = id;
     }
 
     Note(int id, String name, String text, ArrayList<Beacon> beacons, String color) {
@@ -79,4 +84,18 @@ public class Note implements Serializable {
         this.color = color;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Note note = (Note) o;
+        return id == note.id;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id);
+    }
 }
