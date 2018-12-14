@@ -109,13 +109,8 @@ public class NoteDetailsActivity extends AppCompatActivity {
         note.setName(noteNameView.getText().toString());
         note.setText(noteTextView.getText().toString());
 
-//        db.addNote(note);
-        ArrayList<String> beacons = new ArrayList<>();
-        for (Beacon beacon:note.getBeacons()   ) {
-            beacons.add(beacon.getCode());
-        }
 
-        db.editNote(note.getId(),note.getName(),note.getText(),note.getColor(),beacons);
+        db.editNote(note.getId(),note.getName(),note.getText(),note.getColor());
     }
 
     //тут викликаємо діалог вибору кольору

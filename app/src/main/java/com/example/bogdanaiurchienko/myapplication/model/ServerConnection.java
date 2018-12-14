@@ -30,8 +30,6 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
 
     }
 
-
-
     @Override
     protected String doInBackground(String... strings) {
         String adress = this.hostName;
@@ -65,9 +63,19 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
             adress =this.hostName+"note/"+strings[1];
             method = "DELETE";
         }
+//        else if(strings[0].equals("update")){
+//            if(strings[1].equals("note")) {
+//                adress = this.hostName + "edit";
+//            }
+//            else adress = this.hostName + "editBeacons";
+//            method = "POST";
+//        }
         else if(strings[0].equals("update")){
-            adress =this.hostName+"edit";
-            method = "POST";
+            if(strings[1].equals("note")) {
+                adress = this.hostName + "edit/"+strings[2];
+            }
+            else adress = this.hostName + "editBeacons/"+strings[2];
+            method = "GET";
         }
 
         try {
@@ -78,12 +86,12 @@ public class ServerConnection  extends AsyncTask<String, Void, String> {
 //            conn.setRequestProperty("User.-Agent", "Mozilla/5.0");
             conn.setDoInput(true);
             conn.connect();
-            if(method.equals("POST") && strings[0].equals("update")) {
-                byte[] postData       = strings[1].getBytes( StandardCharsets.UTF_8 );
-                try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
-                    wr.write(postData);
-                }
-            }
+//            if(method.equals("POST") && strings[0].equals("update")) {
+//                byte[] postData       = strings[2].getBytes( StandardCharsets.UTF_8 );
+//                try (DataOutputStream wr = new DataOutputStream(conn.getOutputStream())) {
+//                    wr.write(postData);
+//                }
+//            }
 
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(

@@ -11,7 +11,7 @@ public interface DataBaseConnector {
     //створює нову пусту нотатку і повертає її айді
     int getNewNoteId();
 
-    void editNote(int id, String name, String text, String color, ArrayList<String> beaconsCodes);
+    void editNote(int id, String name, String text, String color);
 
     void deleteNote(int id);
 
