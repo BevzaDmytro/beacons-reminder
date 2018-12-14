@@ -18,6 +18,7 @@ import com.example.bogdanaiurchienko.myapplication.R;
 import com.example.bogdanaiurchienko.myapplication.model.Beacon;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseConnector;
 import com.example.bogdanaiurchienko.myapplication.model.DataBaseEmulator;
+import com.example.bogdanaiurchienko.myapplication.model.ServerConnection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,13 +101,33 @@ public class ListViewWithCheckboxActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ArrayList<Beacon> beacons = new ArrayList<>();
+                ArrayList<Integer> beaconsIds = new ArrayList<>();
                 int size = initItemList.size();
                 for(int i=0;i<size;i++) {
                     ListViewItemDTO dto = initItemList.get(i);
                     if(dto.isChecked()){
                         beacons.add(dto.getBeacon());
+                        beaconsIds.add((int)dto.getBeacon().getId());
                     }
                 }
+
+//                String stringBeacons = "beacons={";
+//                int i=0;
+//                for (int id: beaconsIds                     ) {
+//                    stringBeacons += String.valueOf(i)+":"+String.valueOf(id)+",";
+//                }
+//                stringBeacons = stringBeacons.substring(0,stringBeacons.length()-1);
+//                stringBeacons +="}";
+
+                String stringBeacons = "?noteid="+noteId;
+                int i=0;
+                for (int id: beaconsIds                     ) {
+                    stringBeacons += "&beacon"+String.valueOf(i)+"="+String.valueOf(id);
+                }
+                stringBeacons = stringBeacons.substring(0,stringBeacons.length()-1);
+
+
+                ServerConnection con = (ServerConnection) new ServerConnection().execute("update","beacon", stringBeacons);
                 db.getNote(noteId).setBeacons(beacons);
                 finish();
             }

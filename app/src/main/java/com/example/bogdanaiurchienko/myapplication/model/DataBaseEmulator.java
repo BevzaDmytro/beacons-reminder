@@ -135,19 +135,15 @@ this.updateBeaconsFromServer();
         return lastNoteID;
     }
 
-    public void editNote(int id, String name, String text, String color, ArrayList<String> beaconsCodes) {
+    public void editNote(int id, String name, String text, String color) {
 
 //        int noteId = this.notes.get(id).getId();
-        String jsonResult = "note={id:"+String.valueOf(id)+",name:"+name+",text="+text+",color:"+color
-                +"}&beacons={";
-        int i =0;
-        for(String code: beaconsCodes){
-            jsonResult += String.valueOf(i)+":"+code+",";
-            i++;
-        }
-        jsonResult = jsonResult.substring(0, jsonResult.length() - 1);
-        jsonResult +="}";
-        ServerConnection con = (ServerConnection) new ServerConnection().execute("update", jsonResult);
+//        String jsonResult = "note={\"id\":\""+String.valueOf(id)+"\",\"name\":\""+name+"\",\"text\":"+text+"\",\"color\":\""+color
+//                +"\"}";
+
+        color = color.substring(1,color.length());
+        String jsonResult = "?id="+String.valueOf(id)+"&name="+name+"&text="+text+"&color="+color;
+        ServerConnection con = (ServerConnection) new ServerConnection().execute("update","note", jsonResult);
 
 //        Note note = notes.get(id);
 ////        note.setId(id);
